@@ -1,20 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Su.Balance</title>
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        img{float: left;}
-        img{margin-right: 20px;
-            margin-bottom: 40px;}
-        .p2{clear:both;}
-    </style>
+    <link rel="stylesheet" href="/css/info.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {// 페이지가 로드될 때 실행되는 함수
+            loadGraph();
+        });
+    </script>
 </head>
-<body>
+<script th:inline="javascript">
+    var glist = /*[[${glist}]]*/;
 
+    var dataPoints = [];
+    var glucose = 0;
+    var validCount = 0; // 유효한 값의 개수를 저장할 변수
+    var meal =["아침", "점심", "저녁"];
+
+    for (var i = 0; i < glist.length; i++) {
+        var value = glist[i];
+        if (value !== null && value !== "null") {
+            var mealIndex = i % meal.length;
+            dataPoints.push({ x: i, label: meal[mealIndex], y: parseInt(value) }); // 인덱스 + 1을 사용하여 x 값을 조정
+            glucose += parseInt(value);
+            validCount ++;
+        }
+    }
+
+    var mean = validCount > 0 ? glucose / validCount : 0;
+
+    function generateGraph(dataPoints) {
+        var chart = new CanvasJS.Chart("graphContainer", {
+            title: {
+                text: "목표혈당: ?   >     평균 혈당:" + mean.toFixed(2)
+            },
+            data: [{
+                type: "line",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+    function loadGraph() {
+        generateGraph(dataPoints); // 그래프 생성 함수 호출
+    }
+</script>
+<body>
 <div class="navigation">
     <ul>
         <li>
@@ -50,77 +86,95 @@
         </li>
     </ul>
 </div>
+
 <!-- main -->
 <div class="main">
-    <!-- cards -->
-    <div class="cardBox">
-        <div class="card">
-            <div>
-                <div id="studentsCnt" class="numbers"></div>
-                <div class="cardName">개인 정보</div>
-            </div>
-            <div class="iconBx">
-                <i class="fa-solid fa-users"></i>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div id="boardCnt" class="numbers"></div>
-                <div class="cardName">Su.Balance란</div>
-            </div>
-            <div class="iconBx">
-                <ion-icon name="book-outline"></ion-icon>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div id="writerCnt" class="numbers"></div>
-                <div class="cardName">사용 Tips</div>
-            </div>
-            <div class="iconBx">
-                <i class="fa-solid fa-sitemap"></i>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div id="viewsCnt" class="numbers"></div>
-                <div class="cardName">로그아웃</div>
-            </div>
-            <div class="iconBx">
-                <ion-icon name="eye-outline"></ion-icon>
-            </div>
-        </div>
-    </div>
     <!-- table -->
-    <div class="details">
-        <div class="recfentOrders">
-            <body>
+    <div class="locate">
+        <div class="frame"  style="height : 300px; width : 500px">
             <div class="container">
                 <div class="cardHeader">
                     <h2>현재 개인 정보</h2>
                 </div>
                 <div class="input-box">
-                    <label>이름(id) : gunnuuu</label>
-                    <label>비밀번호 : a1234!</label>
-                    <label>키: 171</label>
-                    <label>몸무게: 63</label>
-                    <label>IRS: 3단위</label>
+                    <label>이름(id) :  </label>
+                </div>
+                <div class="input-box">
+                    <label>비밀번호 : </label>
+                </div>
+                <div class="input-box">
+                    <label>키: </label>
+                </div>
+                <div class="input-box">
+                    <label>몸무게: </label>
+                </div>
+                <div class="input-box">
+                    <label>목표혈당: </label>
+                </div>
+                <div class="input-box">
+                    <a href="#" class="btn" id="empAdd">정보 변경</a>
                 </div>
             </div>
-            </body>
 
-            <body>
+            <div class="container" th:action="@{/info/member}" th:method="post">
+                <!-- 정보 변경 팝업 -->
+                <div class="write-popup">
+                    <div class="editor">
+                        <div class="input-box">
+                            <label>이름(id) : </label>
+                            <label>
+                                <input name="id" type="text" placeholder="변경할 이름(id)를 입력해주세요..."  style="width: 300px; height : 30px">
+                            </label>
+                        </div>
+                        <div class="input-box">
+                            <label>비밀번호 : </label>
+                            <label>
+                                <input name="pw" type="text" placeholder="변경할 비밀번호를 입력해주세요..." style="width: 300px; height : 30px">
+                            </label>
+                        </div>
+                        <div class="input-box">
+                            <label>키  : </label>
+                            <label>
+                                <input name="height" type="number" placeholder="변경할 키를 입력해주세요..." style="width: 300px; height : 30px">
+                            </label>
+                        </div>
+                        <div class="input-box">
+                            <label> 몸무게 : </label>
+                            <label>
+                                <input name="weight" type="number" placeholder="변경할 몸무게를 입력해주세요..." style="width: 300px; height : 30px">
+                            </label>
+                        </div>
+                        <div class="input-box">
+                            <label>목표혈당 : </label>
+                            <label>
+                                <input name="goal" type="number" placeholder="변경할 목표혈당를 입력해주세요..." style="width: 300px; height : 30px">
+                            </label>
+                        </div>
+                        <div class="btn-area">
+                            <a href="http://localhost:8080/info" class="btn-cancel">취소</a>
+                            <a href="http://localhost:8080/info" class="btn-success" type="submit" onclick="">등록</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="locate">
+        <div class="frame" style="height : 400px; width: 1100px" onload="loadGraph()">
             <div class="container">
                 <div class="cardHeader">
-                    <h2>개인 정보 수정</h2>
+                    <h2>Gunnuuu님의 혈당 그래프</h2>
                 </div>
-
+                <div id="graphContainer" style="width: 80%; height: 80%;"></div>
             </div>
-            </body>
         </div>
     </div>
 </div>
 </body>
+</html>
+
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script
