@@ -49,9 +49,10 @@
 
         <!-- 로그인 페이지 -->
         <div class="col align-items-center flex-col sign-in">
+            <span style="color:red" th:text="${warning}"></span>
+            <br><br>
             <div class="form-wrapper align-items-center">
                 <div class="form sign-in">
-
                     <form th:action="@{/real_login}" th:method="post">
                         <div class="input-group">
                             <i class='bx bxs-user'></i>

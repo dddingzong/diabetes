@@ -26,7 +26,7 @@ public class CalculatorController {
     public String calculator(Model model){
 
         Member member = new Member();
-        member.setIcr(10);
+        //member.setIcr(10);
 
         if (member.getIcr() == null){
             return "calculatorTest";
@@ -34,13 +34,19 @@ public class CalculatorController {
 
         // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
         List<Integer> progressList= calculatorService.getProgress();
-        model.addAttribute("progressList",progressList);
+        int progress_Carbohydrate = progressList.get(0);
+        int progress_Protein = progressList.get(1);
+        int progress_Fat = progressList.get(2);
+        model.addAttribute("progress_Carbohydrate",progress_Carbohydrate);
+        model.addAttribute("progress_Protein",progress_Protein);
+        model.addAttribute("progress_Fat",progress_Fat);
 
         return "calculator";
     }
 
     @PostMapping("/calculator")
     public String calculate(Model model, String meal, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist) {
+
         //사이트에서 name 이랑 g 가져오기 (여러개임)
 
         List<String> namelist = new ArrayList<>();
@@ -50,6 +56,9 @@ public class CalculatorController {
         // 걍고문을 위한 수치
         int fatSum = 0;
 
+        // api 정리
+        int carbohydrateSum=0;
+        Long member_id = 0L;
 
         for (int i=0;i<foodlist.getFoodlist().size();i++){
             namelist.add(foodlist.getFoodlist().get(i).getName());
@@ -57,18 +66,28 @@ public class CalculatorController {
         }
         // namelist, gramlist 분리 성공!!
 
-        // api 정리
-        int carbohydrateSum=0;
-        Long member_id = 0L;
 
-        //test 필요 23.08.29
-        for (int i = 0;i<namelist.size();i++) {
-            //food가 db에 존재하는지 확인
-            if (!(calculatorService.checkFood(namelist.get(i)))){
-                System.out.println("음식이 DB에 존재하지 않습니다.");
-                continue;
+        // food 가 db 에 존재하는지 (1차 테스트)
+        for (int i=0;i<namelist.size();i++) {
+            if (!(calculatorService.checkFood(namelist.get(i)))) {
+                model.addAttribute("DbWarning", "데이터베이스에 존재하지 않는 음식입니다. 확인 후 다시 입력해주세요");
+
+                // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
+                List<Integer> progressList= calculatorService.getProgress();
+                int progress_Carbohydrate = progressList.get(0);
+                int progress_Protein = progressList.get(1);
+                int progress_Fat = progressList.get(2);
+                model.addAttribute("progress_Carbohydrate",progress_Carbohydrate);
+                model.addAttribute("progress_Protein",progress_Protein);
+                model.addAttribute("progress_Fat",progress_Fat);
+
+                return "/calculator";
             }
+        }
+        // 모든 gram 이 int 인지 (2차 테스트)
 
+
+        for (int i = 0;i<namelist.size();i++) {
             // food_db 에서 name 별 carbohydrate, protein, fat, category 추출
             Food food = calculatorService.findByName(namelist.get(i));
 
@@ -96,7 +115,12 @@ public class CalculatorController {
 
         // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
         List<Integer> progressList= calculatorService.getProgress();
-        model.addAttribute("progressList",progressList);
+        int progress_Carbohydrate = progressList.get(0);
+        int progress_Protein = progressList.get(1);
+        int progress_Fat = progressList.get(2);
+        model.addAttribute("progress_Carbohydrate",progress_Carbohydrate);
+        model.addAttribute("progress_Protein",progress_Protein);
+        model.addAttribute("progress_Fat",progress_Fat);
 
         // 경고문 갱신!! (category 로?)
         // catelist 에 채소가 없으면 경고문 + fatSum 의 값이 40 넘으면 경고문
@@ -110,18 +134,17 @@ public class CalculatorController {
         } else {
             meal = "N";
         }
-        System.out.println("carbohydrateSum = " + carbohydrateSum); // 수정해야됨
-        System.out.println("meal = " + meal);
-        System.out.println("member_id = " + member_id);
-
+//        System.out.println("carbohydrateSum = " + carbohydrateSum); // 수정해야됨
+//        System.out.println("meal = " + meal);
+//        System.out.println("member_id = " + member_id);
 
         return "/calculator";
     }
 
     @PostMapping("/calculatorTest")
     public String calculateTest(Model model, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist, int amount, int glucose) {
-        //사이트에서 name 이랑 g 가져오기 (여러개임)
 
+        //사이트에서 name 이랑 g 가져오기 (여러개임)
         List<String> namelist = new ArrayList<>();
         List<Integer> gramlist = new ArrayList<>();
 
@@ -133,14 +156,16 @@ public class CalculatorController {
 
         int carbohydrateSum = 0;
 
-        //test 필요 23.08.29
-        for (int i = 0;i<namelist.size();i++) {
-            //food가 db에 존재하는지 확인
-            if (!(calculatorService.checkFood(namelist.get(i)))){
-                System.out.println("음식이 DB에 존재하지 않습니다.");
-                continue;
+        // food 가 db 에 존재하는지 (1차 테스트)
+        for (int i =0;i<namelist.size();i++) {
+            if (!(calculatorService.checkFood(namelist.get(i)))) {
+                model.addAttribute("DbWarning", "데이터베이스에 존재하지 않는 음식입니다. 확인 후 다시 입력해주세요");
+                return "redirect:/calculator";
             }
+        }
 
+
+        for (int i = 0;i<namelist.size();i++) {
             // food_db 에서 name 별 carbohydrate 추출
             Food food = calculatorService.findByName(namelist.get(i));
 
@@ -151,12 +176,10 @@ public class CalculatorController {
             float real_carbohydrate = (food_carbohydrate / 100) * food_gram;
             carbohydrateSum += real_carbohydrate;
         }
-        System.out.println("carbohydrateSum = " + carbohydrateSum);
-        System.out.println("amount = " + amount);
-        System.out.println("glucose = " + glucose);
 
-
-
+//        System.out.println("carbohydrateSum = " + carbohydrateSum);
+//        System.out.println("amount = " + amount);
+//        System.out.println("glucose = " + glucose);
 
         int icr=0;
         // 이거 member 에 다시 넣어야함

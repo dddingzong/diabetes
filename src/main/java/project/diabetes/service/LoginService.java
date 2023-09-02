@@ -19,8 +19,21 @@ public class LoginService {
     }
 
     @Transactional
+    public boolean checkDuplicateId(String userId){
+        return loginRepository.checkDuplicateId(userId);
+    }
+
+
+    @Transactional
+    public boolean checkNoUserId(String login_userId){
+        return loginRepository.checkNoUserId(login_userId);
+    }
+
+    @Transactional
     public Login login(String login_userId){
         return loginRepository.Login(login_userId);
     }
+
+
 
 }

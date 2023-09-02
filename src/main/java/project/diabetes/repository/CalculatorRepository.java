@@ -32,14 +32,14 @@ public class CalculatorRepository{
         }
     }
 
-
     public void saveFoodRecord(FoodRecord foodRecord){
         em.persist(foodRecord);
     }
 
     //같은 날짜의 모든 음식 가져와서 탄단지 합 구하기
     public List<FoodRecord> findAllFoodRecord(){
-        return em.createQuery("select r from FoodRecord r").getResultList();
+        return em.createQuery("select r from FoodRecord r")
+                .getResultList();
     }
 
     //test
