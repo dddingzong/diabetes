@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import project.diabetes.domain.Login;
+import project.diabetes.domain.Member;
 import project.diabetes.service.LoginService;
 
 import javax.persistence.NoResultException;
@@ -61,6 +62,13 @@ public class LoginController {
             model.addAttribute("warning","비밀번호가 틀렸습니다.");
             return "logIn";
         }
-        return "info";
+
+        // uesrId를 사용해 Member table 에서 member_id를 가져옴 (이제 모든 DB의 구분자)
+        Member member = loginService.findMember(login_userId);
+        Long member_id = member.getId();
+        model.addAttribute("memberId",member_id);
+
+        String originalUrl = "redirect:/info/";
+        return originalUrl+member_id;
     }
 }

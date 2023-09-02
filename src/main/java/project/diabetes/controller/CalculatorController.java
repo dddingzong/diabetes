@@ -164,7 +164,6 @@ public class CalculatorController {
             }
         }
 
-
         for (int i = 0;i<namelist.size();i++) {
             // food_db 에서 name 별 carbohydrate 추출
             Food food = calculatorService.findByName(namelist.get(i));
@@ -181,7 +180,7 @@ public class CalculatorController {
 //        System.out.println("amount = " + amount);
 //        System.out.println("glucose = " + glucose);
 
-        int icr=0;
+        int icr = calculatorService.calculateIcr(carbohydrateSum,amount,glucose);
         // 이거 member 에 다시 넣어야함
 
         return "/info";

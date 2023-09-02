@@ -5,6 +5,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.diabetes.domain.Login;
+import project.diabetes.domain.Member;
 import project.diabetes.repository.LoginRepository;
 
 @Service
@@ -32,6 +33,10 @@ public class LoginService {
     @Transactional
     public Login login(String login_userId){
         return loginRepository.Login(login_userId);
+    }
+
+    public Member findMember(String login_userId){
+        return loginRepository.findMember(login_userId);
     }
 
 

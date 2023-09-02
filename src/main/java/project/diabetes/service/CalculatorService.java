@@ -93,4 +93,9 @@ public class CalculatorService {
         }
         return warning;
     }
+
+    public int calculateIcr(int carbohydrateSum, int amount, int glucose) {
+
+        return 0;
+    }
 }
