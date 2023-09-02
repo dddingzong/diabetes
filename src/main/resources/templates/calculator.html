@@ -18,13 +18,13 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="/info">
+                    <a th:href="@{/info/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="heart-circle-outline"></ion-icon></span>
                         <span class="title">Su.Balance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/info">
+                    <a th:href="@{/info/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">홈</span>
                     </a>
@@ -72,7 +72,6 @@
                          <input type="radio" name="meal" value="간식"><span>간식</span>
                      </label>
                      <br><br>
-
                      <div class = "food"> <!-- 음식 넣는 구역 -->
                          <div class="plus_food">음식1: &nbsp;&nbsp;
                              <input type=text name="foodlist[0].name" class="food_name" id='autoComplete' placeholder="이름"> &nbsp;&nbsp;&nbsp;
@@ -113,6 +112,8 @@
     </div>
 </body>
 
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script type="text/javascript" src="/js/calculator.js"></script>
 <script type="text/javascript" src="/js/calculator2.js"></script>
 </html>
