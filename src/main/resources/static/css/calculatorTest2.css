@@ -153,7 +153,7 @@
 .forTest{
     position: relative;
     width: 350px;
-    height: 100px;
+    height: 180px;
     background-color: var(--grey);
     padding: 25px;
     box-shadow: 0 7px 25px rgba(0,0,0,0.2);
@@ -165,7 +165,7 @@
 .plusTest{
     position:relative;
     left: 670px;
-    bottom: 250px;
+    bottom: 280px;
 }
 
 .amount{
@@ -178,6 +178,10 @@
     height: 25px;
 }
 
+.bglucose{
+    width: 100px;
+    height: 25px;
+}
 
 /* 전체 설정 */
 input::-webkit-input-placeholder { font-size: 90%; text-align: center; }

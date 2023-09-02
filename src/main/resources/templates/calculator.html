@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/calculator">
+                    <a th:href="@{/calculator/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
                         <span class="title">투여량 계산</span>
                     </a>
@@ -60,7 +60,7 @@
                  <div class="cardHeader">
                      <h2 style="font-size:30px">투여량 계산</h2>
                  </div>
-                 <form th:action="@{/calculator}" th:method="post">
+                 <form th:action="@{/calculator/{id}(id=${memberId})}" th:method="post">
                     <strong><span style="color:red; font-size:15px;" th:text="${DbWarning}"></span></strong>
                      <br><br>
                      <!-- 식사 간식 여부 -->

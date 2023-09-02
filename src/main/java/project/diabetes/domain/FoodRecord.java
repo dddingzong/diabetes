@@ -35,12 +35,13 @@ public class FoodRecord{ // food_record
     public FoodRecord() {
     }
 
-    public FoodRecord(String name, int gram, float carbohydrate, float protein, float fat, String category) {
+    public FoodRecord(String name, int gram, float carbohydrate, float protein, float fat, String category, Long member_id) {
         this.name = name;
         this.gram = gram;
         this.carbohydrate = carbohydrate;
         this.protein = protein;
         this.fat = fat;
         this.category = category;
+        this.member_id = member_id;
     }
 }

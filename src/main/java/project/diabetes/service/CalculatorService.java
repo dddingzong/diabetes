@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.diabetes.domain.Food;
 import project.diabetes.domain.FoodRecord;
+import project.diabetes.domain.Member;
 import project.diabetes.repository.CalculatorRepository;
 
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class CalculatorService {
     }
 
 
-    public List<Integer> getProgress() {
+    public List<Integer> getProgress(Long memberId) {
         LocalDateTime nowDate = LocalDateTime.now();
         int NowYear = nowDate.getYear();
         int NowMonth = nowDate.getMonthValue();
@@ -52,7 +53,7 @@ public class CalculatorService {
         int totalProtein = 0;
         int totalFat = 0;
 
-        List<FoodRecord> allFoodRecord = calculatorRepository.findAllFoodRecord();
+        List<FoodRecord> allFoodRecord = calculatorRepository.findFoodRecordByMemberId(memberId);
         for (FoodRecord foodRecord : allFoodRecord) {
             if (foodRecord.getInputDate().getYear()==NowYear && foodRecord.getInputDate().getMonthValue()==NowMonth && foodRecord.getInputDate().getDayOfMonth()==NowDay){
                 totalCarbohydrate += foodRecord.getCarbohydrate();
@@ -94,8 +95,17 @@ public class CalculatorService {
         return warning;
     }
 
-    public int calculateIcr(int carbohydrateSum, int amount, int glucose) {
+    public int calculateIcr(int carbohydrateSum,int bglucose, int amount, int glucose) {
 
-        return 0;
+        return 12;
+    }
+
+    public Member findMemberByMemberId(Long memberId){
+        return calculatorRepository.findMemberByMemberId(memberId);
+    }
+
+    @Transactional
+    public void flush(){
+        calculatorRepository.flush();
     }
 }

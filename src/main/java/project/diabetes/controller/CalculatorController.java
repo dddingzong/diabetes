@@ -1,12 +1,10 @@
 package project.diabetes.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import project.diabetes.domain.Food;
 import project.diabetes.domain.FoodRecord;
 import project.diabetes.domain.Member;
@@ -22,18 +20,17 @@ public class CalculatorController {
 
     private final CalculatorService calculatorService;
 
-    @GetMapping("/calculator")  //인슐린 계산 페이지
-    public String calculator(Model model){
-
-        Member member = new Member();
-        //member.setIcr(10);
+    @GetMapping("/calculator/{memberId}")  //인슐린 계산 페이지
+    public String calculator(Model model, @PathVariable Long memberId){
+        Member member = calculatorService.findMemberByMemberId(memberId);
+        model.addAttribute("memberId",memberId);
 
         if (member.getIcr() == null){
             return "calculatorTest";
         }
 
         // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
-        List<Integer> progressList= calculatorService.getProgress();
+        List<Integer> progressList= calculatorService.getProgress(memberId);
         int progress_Carbohydrate = progressList.get(0);
         int progress_Protein = progressList.get(1);
         int progress_Fat = progressList.get(2);
@@ -44,11 +41,10 @@ public class CalculatorController {
         return "calculator";
     }
 
-    @PostMapping("/calculator")
-    public String calculate(Model model, String meal, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist) {
-
+    @PostMapping("/calculator/{memberId}")
+    public String calculate(Model model, String meal, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
         //사이트에서 name 이랑 g 가져오기 (여러개임)
-
         List<String> namelist = new ArrayList<>();
         List<Integer> gramlist = new ArrayList<>();
         // 경고문을 위한 list
@@ -73,7 +69,7 @@ public class CalculatorController {
                 model.addAttribute("DbWarning", "데이터베이스에 존재하지 않는 음식입니다. 확인 후 다시 입력해주세요");
 
                 // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
-                List<Integer> progressList= calculatorService.getProgress();
+                List<Integer> progressList= calculatorService.getProgress(memberId);
                 int progress_Carbohydrate = progressList.get(0);
                 int progress_Protein = progressList.get(1);
                 int progress_Fat = progressList.get(2);
@@ -108,13 +104,13 @@ public class CalculatorController {
             fatSum += real_fat;
             carbohydrateSum += real_carbohydrate;
             // food_record_db 에 다 넣기
-            // (id, name, gram, carbohydrate, protein, fat, inputDate, category, memberId(미정))
-            FoodRecord foodRecord = new FoodRecord(food_name, food_gram, real_carbohydrate, real_protein, real_fat, food_category);
+            // (id, name, gram, carbohydrate, protein, fat, inputDate, category, memberId)
+            FoodRecord foodRecord = new FoodRecord(food_name, food_gram, real_carbohydrate, real_protein, real_fat, food_category, memberId);
             calculatorService.saveFoodRecord(foodRecord);
         }
 
         // 게이지값 동시에 갱신 !! (inputDate 를 기준으로 같은날 뽑아오기)
-        List<Integer> progressList= calculatorService.getProgress();
+        List<Integer> progressList= calculatorService.getProgress(memberId);
         int progress_Carbohydrate = progressList.get(0);
         int progress_Protein = progressList.get(1);
         int progress_Fat = progressList.get(2);
@@ -128,7 +124,7 @@ public class CalculatorController {
         model.addAttribute("warning",warning);
 
         // api 값 보내주기
-        // 승환이 한테 보내야하는 값: 탄수합(carbohydrateSum), 식사 여부(meal), member_id
+        // 승환이 한테 보내야하는 값: 탄수합(carbohydrateSum), 식사 여부(meal), memberId
         if (meal.equals("식사")){ // 식사면 Y 간식이면 N
             meal = "Y";
         } else {
@@ -136,14 +132,21 @@ public class CalculatorController {
         }
 //        System.out.println("carbohydrateSum = " + carbohydrateSum); // 수정해야됨
 //        System.out.println("meal = " + meal);
-//        System.out.println("member_id = " + member_id);
+//        System.out.println("memberId = " + memberId);
 
         return "/calculator";
     }
 
-    @PostMapping("/calculatorTest")
-    public String calculateTest(Model model, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist, int amount, int glucose) {
+    @GetMapping("/calculatorTest/{memberId}")
+    public String calculateTestGet(Model model, @PathVariable Long memberId){
+        model.addAttribute("memberId",memberId);
+        model.addAttribute("DbWarning", "데이터베이스에 존재하지 않는 음식입니다. 확인 후 다시 입력해주세요");
+        return "calculatorTest";
+    }
 
+    @PostMapping("/calculatorTest/{memberId}")
+    public String calculateTest(Model model, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist, int amount, int glucose, int bglucose, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
         //사이트에서 name 이랑 g 가져오기 (여러개임)
         List<String> namelist = new ArrayList<>();
         List<Integer> gramlist = new ArrayList<>();
@@ -159,8 +162,7 @@ public class CalculatorController {
         // food 가 db 에 존재하는지 (1차 테스트)
         for (int i =0;i<namelist.size();i++) {
             if (!(calculatorService.checkFood(namelist.get(i)))) {
-                model.addAttribute("DbWarning", "데이터베이스에 존재하지 않는 음식입니다. 확인 후 다시 입력해주세요");
-                return "redirect:/calculator";
+                return "redirect:/calculatorTest/"+memberId;
             }
         }
 
@@ -177,13 +179,19 @@ public class CalculatorController {
         }
 
 //        System.out.println("carbohydrateSum = " + carbohydrateSum);
+//        System.out.println("bglucose = " + bglucose);
 //        System.out.println("amount = " + amount);
 //        System.out.println("glucose = " + glucose);
 
-        int icr = calculatorService.calculateIcr(carbohydrateSum,amount,glucose);
+        int icr = calculatorService.calculateIcr(carbohydrateSum,bglucose,amount,glucose);
         // 이거 member 에 다시 넣어야함
+        Member member = calculatorService.findMemberByMemberId(memberId);
+        //db에 직접 넣기로 바꿔야할듯
+        member.setIcr(icr);
+        calculatorService.flush();
 
-        return "/info";
+        String originalUrl = "redirect:/info/";
+        return originalUrl+memberId;
     }
 
 

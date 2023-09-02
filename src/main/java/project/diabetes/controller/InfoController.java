@@ -10,10 +10,9 @@ import static project.diabetes.repository.RecordsRepository.glist;
 @Controller
 public class InfoController {
     @GetMapping("/info/{memberId}")
-    public String getInfoPage(Model model, @PathVariable String memberId) {
+    public String getInfoPage(Model model, @PathVariable Long memberId) {
         model.addAttribute("glist", glist);
-
-        System.out.println("{memberId} = " + memberId);
+        model.addAttribute("memberId",memberId);
 
         return "info"; // info.html 템플릿으로 이동
     }
