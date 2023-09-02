@@ -3,44 +3,44 @@
 <head>
     <title>Gunnuuu님의 혈당 그래프</title>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script th:inline="javascript">
-        var glist = /*[[${glist}]]*/;
-
-        var dataPoints = [];
-        var glucose = 0;
-        var validCount = 0; // 유효한 값의 개수를 저장할 변수
-        var meal =["아침", "점심", "저녁"];
-
-        for (var i = 0; i < glist.length; i++) {
-            var value = glist[i];
-            if (value !== null && value !== "null") {
-                var mealIndex = i % meal.length;
-                dataPoints.push({ x: i, label: meal[mealIndex], y: parseInt(value) }); // 인덱스 + 1을 사용하여 x 값을 조정
-                glucose += parseInt(value);
-                validCount ++;
-            }
-        }
-
-        var mean = validCount > 0 ? glucose / validCount : 0;
-
-        function generateGraph(dataPoints) {
-            var chart = new CanvasJS.Chart("chartContainer", {
-                title: {
-                    text: "Gunnuuu님의 혈당 그래프  목표혈당: ?   >     평균 혈당:" + mean.toFixed(2)
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: dataPoints
-                }]
-            });
-            chart.render();
-        }
-
-        window.onload = function() {
-            generateGraph(dataPoints); // 그래프 생성 함수 호출
-        };
-    </script>
 </head>
+<script th:inline="javascript">
+    var glist = /*[[${glist}]]*/;
+
+    var dataPoints = [];
+    var glucose = 0;
+    var validCount = 0; // 유효한 값의 개수를 저장할 변수
+    var meal =["아침", "점심", "저녁"];
+
+    for (var i = 0; i < glist.length; i++) {
+        var value = glist[i];
+        if (value !== null && value !== "null") {
+            var mealIndex = i % meal.length;
+            dataPoints.push({ x: i, label: meal[mealIndex], y: parseInt(value) }); // 인덱스 + 1을 사용하여 x 값을 조정
+            glucose += parseInt(value);
+            validCount ++;
+        }
+    }
+
+    var mean = validCount > 0 ? glucose / validCount : 0;
+
+    function generateGraph(dataPoints) {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+                text: "Gunnuuu님의 혈당 그래프  목표혈당: ?   >     평균 혈당:" + mean.toFixed(2)
+            },
+            data: [{
+                type: "line",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+
+    window.onload = function() {
+        generateGraph(dataPoints); // 그래프 생성 함수 호출
+    };
+</script>
 <body>
 <div id="chartContainer" style="width: 100%; height: 300px;"></div>
 </body>

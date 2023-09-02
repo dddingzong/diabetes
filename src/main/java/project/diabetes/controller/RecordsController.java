@@ -94,10 +94,15 @@ public class RecordsController {
     }
 
     @GetMapping("/graph") //그래프
-    public String graph(Model model){
+    public String graph(Model model) {
         model.addAttribute("glist", glist);
         System.out.println(glist);
         return "graph";
+    }
+    @GetMapping("/info")
+    public String getInfoPage(Model model) {
+        model.addAttribute("glist", glist);
+        return "info"; // info.html 템플릿으로 이동
     }
 }
 
