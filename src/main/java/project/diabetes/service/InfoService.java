@@ -12,10 +12,14 @@ public class InfoService{
         private final InfoRepository infoRepository;
 
         @Transactional
-        public void saveFoodRecord(Member member){
+        public void saveMemberInfo(Member member){
             infoRepository.saveMemberInfo(member);
         }
         public Member findMemberByMemberId(Long memberId){
             return infoRepository.findMemberByMemberId(memberId);
+        }
+
+        public void alterMemberInfo(Member member) {
+            infoRepository.alterMemberInfo(member);
         }
 }

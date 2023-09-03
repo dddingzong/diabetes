@@ -51,6 +51,7 @@
     }
 </script>
 <body>
+
 <div class="navigation">
     <ul>
         <li>
@@ -86,6 +87,7 @@
     </ul>
 </div>
 
+
 <!-- main -->
 <div class="main">
     <!-- table -->
@@ -97,27 +99,27 @@
                         <h2>현재 개인 정보</h2>
                     </div>
                     <div class="input-box">
-                        <label>id :  </label>
+                        <label>id :  <span th:text="${member.id}"></span></label>
                         <label>비밀번호 : </label>
                     </div>
                     <div class="input-box">
-                        <label>이름 :  </label>
+                        <label>이름 :  <span th:text="${member.name}"></span></label>
                         <label>나이 : </label>
                     </div>
                     <div class="input-box">
-                        <label>성별 : </label>
+                        <label>성별 : <span th:text="${member.sex}"></span></label>
                         <label>키: </label>
                     </div>
                     <div class="input-box">
-                        <label>몸무게: </label>
-                        <label>목표혈당: </label>
+                        <label>몸무게: <span th:text="${member.weight}"></span></label>
+                        <label>목표혈당: <span th:text="${member.goal}"></span> </label>
                     </div>
                     <div class="input-box">
                         <a href="#" class="btn" id="empAdd">정보 변경</a>
                     </div>
                 </div>
 
-                <div class="container" th:action="@{/info/{id}(id=${memberId})}/member}" th:method="post">
+                <div class="container" th:action="@{/info/{id}(id=${memberId})}/alter}" th:method="post">
                     <!-- 정보 변경 팝업 -->
                     <div class="write-popup">
                         <div class="editor">

@@ -1,44 +1,40 @@
 package project.diabetes.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import project.diabetes.domain.RecordsEntity;
-import project.diabetes.repository.RecordsRepository;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import project.diabetes.domain.Record;
+import project.diabetes.service.RecordService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static project.diabetes.repository.RecordsRepository.glist;
-import static project.diabetes.repository.RecordsRepository.recordlist;
-
 @Controller
-public class RecordsController {
+@SessionAttributes("glist")
+@RequiredArgsConstructor
+public class RecordController {
 
-    @Autowired //스프링 부트가 미리 생성해 놓은 객체를 가져다 자동 연결
-    private RecordsRepository recordsRepository;
+    List<String> recordlist = new ArrayList<>();
+    List<String> glist = new ArrayList<>();
+
+    private final RecordService recordService;
 
     @PostMapping("/record/{memberId}/save")
-    public String createRecord(RecordsDto recordsDto) {
-        System.out.println(recordsDto.toString());
-
-        //1.Dto -> Entity로 변환
-        RecordsEntity recordsEntity = recordsDto.toEntity();
-        System.out.println(recordsEntity.toString());
-
-        //2.Repository 에게 Entity를 DB에게 저장하게 함
-        RecordsEntity saved = recordsRepository.save(recordsEntity);
+    public String createRecord(Record record, @PathVariable Long memberId, Model model) {
+        recordService.saveRecord(record);
 
         //recordlist로 amount, glucose 가져옴
-        recordlist.add(String.valueOf(saved).split(",")[0]);
-        recordlist.add(String.valueOf(saved).split(",")[1]);
-        System.out.println(recordlist);
+        recordlist.add(String.valueOf(record.getAmount()));
+        recordlist.add(String.valueOf(record.getGlucose()));
 
         //glist로 glucose만 가져옴
-        glist.add(String.valueOf(saved).split(",")[1]);
-        System.out.println(glist);
+        glist.add(String.valueOf(record.getGlucose()));
+        model.addAttribute("glist", glist);
+
 
         if (recordlist.size() <= 84) {
             return "redirect:/board/"+memberId; // board 템플릿으로 리다이렉트
@@ -96,7 +92,6 @@ public class RecordsController {
     @GetMapping("/graph/{memberId}") //그래프
     public String graph(Model model) {
         model.addAttribute("glist", glist);
-        System.out.println(glist);
         return "graph/{memberId}";
     }
 }
