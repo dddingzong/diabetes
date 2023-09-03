@@ -148,7 +148,7 @@ public class CalculatorController {
     public String calculateRetestGet(Model model, @PathVariable Long memberId){
         model.addAttribute("memberId",memberId);
         model.addAttribute("DbWarning",
-                "식전 혈당과 식후 혈당의 차이가 너무 큽니다. 인슐린 투여량을 조절 후 다음 식사시간에 다시 테스트 해줏십시오");
+                "식전 혈당과 식후 혈당의 차이가 너무 큽니다. 인슐린 투여량을 조절 후 다음 식사시간에 다시 테스트 해주십시오");
         return "calculatorTest";
     }
 

@@ -19,12 +19,12 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @GetMapping("/login") //로그인 페이지
+    @GetMapping("/") //로그인 페이지
     public String home(){
         return "logIn";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/")
     public String signUp(Model model, String userId, String userEmail, String userPassword, String userPassword2){
 
         // 아이디가 중복된 경우 (true 면 중복)
