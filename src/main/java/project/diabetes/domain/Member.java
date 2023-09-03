@@ -21,7 +21,7 @@ public class Member {
     private Integer icr;
     private float height;
     private float weight;
-    private float goal;
+    private Integer goal;
 
     private String userId;
 }
