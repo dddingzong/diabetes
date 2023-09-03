@@ -22,9 +22,10 @@ public class InfoController {
         model.addAttribute("glist", glist);
         model.addAttribute("memberId",memberId);
 
-        if (member.getGoal() == null) {
-            return "infoFirst";
-        }
-        return "/info/{memberId}";
+//        if (member.getGoal() == null) {
+//            return "infoFirst";
+//        }
+
+        return "info";
     }
 }
