@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import project.diabetes.domain.Food;
 import project.diabetes.domain.FoodRecord;
+import project.diabetes.domain.Member;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,6 +21,12 @@ public class CalculatorRepository{
                 .getSingleResult();
     }
 
+    public Member findMemberByMemberId(Long memberId){
+        return em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Member.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
+
     // 음식이 데이터에 존재하는지 확인
     public boolean checkFood(String name){
         try {
@@ -32,14 +39,20 @@ public class CalculatorRepository{
         }
     }
 
-
     public void saveFoodRecord(FoodRecord foodRecord){
         em.persist(foodRecord);
     }
 
     //같은 날짜의 모든 음식 가져와서 탄단지 합 구하기
     public List<FoodRecord> findAllFoodRecord(){
-        return em.createQuery("select r from FoodRecord r").getResultList();
+        return em.createQuery("select r from FoodRecord r")
+                .getResultList();
+    }
+
+    public List<FoodRecord> findFoodRecordByMemberId(Long memberId){
+        return em.createQuery("select r from FoodRecord r where r.member_id=:memberId")
+                .setParameter("memberId",memberId)
+                .getResultList();
     }
 
     //test
@@ -47,4 +60,7 @@ public class CalculatorRepository{
         return em.find(FoodRecord.class,id);
     }
 
+    public void flush(){
+        em.flush();
+    }
 }

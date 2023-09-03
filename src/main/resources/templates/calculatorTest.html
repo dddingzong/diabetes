@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/calculator">
+                    <a th:href="@{/calculator/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
                         <span class="title">투여량 계산</span>
                     </a>
@@ -63,11 +63,13 @@
                  <strong>첫 이용자들은 필수적으로 해야하는 투여량 테스트입니다.</strong><br>
                  <strong>평소 자신의 식단과 투여량, 2시간 뒤 혈당을 입력해 주십시오.</strong>
                  <br><br>
-                 <form th:action="@{/calculatorTest}" th:method="post">
+                 <form th:action="@{/calculatorTest/{id}(id=${memberId})}" th:method="post">
+                     <strong><span style="color:red; font-size:15px;" th:text="${DbWarning}"></span></strong>
+                     <br><br>
                      <div class = "food"> <!-- 음식 넣는 구역 -->
                          <div class="plus_food">음식1: &nbsp;&nbsp;
                              <input type=text name="foodlist[0].name" class="food_name" id='autoComplete' placeholder="이름"> &nbsp;&nbsp;&nbsp;
-                             <input type=text name="foodlist[0].gram" class="food_g" placeholder="g">
+                             <input type=number name="foodlist[0].gram" class="food_g" placeholder="g">
                          </div>
                          <!-- 박스 추가되는 영역 -->
                          <div id="boxWrap"> </div>
@@ -77,8 +79,9 @@
                      </div>
                      <div class="plusTest">
                          <div class="forTest">
-                             투여량:&nbsp; <input type="text" name="amount" class="amount" placeholder="8"><br><br>
-                             2시간 뒤 혈당:&nbsp; <input type="text" name="glucose" class="glucose" placeholder="100">
+                             식전 혈당:&nbsp; <input type="number" name="bglucose" class="bglucose" placeholder="80"><br><br>
+                             투여량:&nbsp; <input type="number" name="amount" class="amount" placeholder="8"><br><br>
+                             2시간 뒤 혈당:&nbsp; <input type="number" name="glucose" class="glucose" placeholder="100">
                          </div>
                          <br>
                          <button type="submit" id="result_btn" class="btn_result">테스트</button>
@@ -89,6 +92,8 @@
     </div>
 </body>
 
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script type="text/javascript" src="/js/calculator.js"></script>
 <script type="text/javascript" src="/js/calculator2.js"></script>
 </html>

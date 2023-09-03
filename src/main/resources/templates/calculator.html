@@ -18,19 +18,19 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="/info">
+                    <a th:href="@{/info/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="heart-circle-outline"></ion-icon></span>
                         <span class="title">Su.Balance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/info">
+                    <a th:href="@{/info/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">홈</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/calculator">
+                    <a th:href="@{/calculator/{id}(id=${memberId})}">
                         <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
                         <span class="title">투여량 계산</span>
                     </a>
@@ -60,7 +60,9 @@
                  <div class="cardHeader">
                      <h2 style="font-size:30px">투여량 계산</h2>
                  </div>
-                 <form th:action="@{/calculator}" th:method="post">
+                 <form th:action="@{/calculator/{id}(id=${memberId})}" th:method="post">
+                    <strong><span style="color:red; font-size:15px;" th:text="${DbWarning}"></span></strong>
+                     <br><br>
                      <!-- 식사 간식 여부 -->
                      <label class="box-radio-input">
                          <input type="radio" name="meal" value="식사" checked="checked"><span>식사</span>
@@ -70,11 +72,10 @@
                          <input type="radio" name="meal" value="간식"><span>간식</span>
                      </label>
                      <br><br>
-
                      <div class = "food"> <!-- 음식 넣는 구역 -->
                          <div class="plus_food">음식1: &nbsp;&nbsp;
                              <input type=text name="foodlist[0].name" class="food_name" id='autoComplete' placeholder="이름"> &nbsp;&nbsp;&nbsp;
-                             <input type=text name="foodlist[0].gram" class="food_g" placeholder="g">
+                             <input type=number name="foodlist[0].gram" class="food_g" placeholder="g">
                          </div>
                          <!-- 박스 추가되는 영역 -->
                          <div id="boxWrap">
@@ -93,17 +94,26 @@
 
                  <div class ="nutrient">
                      <span style="font-size:20px">탄수화물 : </span>
-                     <progress class="progress" id="carbohydrate" th:value="${progressList.get(0)}" min="0" max="1300"></progress>
+                     <progress class="progress" id="carbohydrate" th:value="${progress_Carbohydrate}" min="0" max="1300"></progress>
                      &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:20px">단백질 : </span>
-                     <progress class="progress" id="protein" th:value="${progressList.get(1)}" min="0" max="100"></progress>
+                     <progress class="progress" id="protein" th:value="${progress_Protein}" min="0" max="100"></progress>
                      &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:20px">지방 : </span>
-                     <progress class="progress" id="fat" th:value="${progressList.get(2)}" min="0" max="70"></progress>
+                     <progress class="progress" id="fat" th:value="${progress_Fat}" min="0" max="70"></progress>
+                     <br>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <span style="font-size:15px" th:text="${progress_Carbohydrate}"></span><span style="font-size:15px">/1300</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <span style="font-size:15px" th:text="${progress_Protein}"></span><span style="font-size:15px">/100</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <span style="font-size:15px" th:text="${progress_Fat}"></span><span style="font-size:15px">/70</span>
                  </div>
              </div>
          </div>
     </div>
 </body>
 
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script type="text/javascript" src="/js/calculator.js"></script>
 <script type="text/javascript" src="/js/calculator2.js"></script>
 </html>
