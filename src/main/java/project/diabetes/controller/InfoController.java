@@ -19,18 +19,12 @@ public class InfoController {
     @GetMapping("/info/{memberId}")
     public String info(Model model, @PathVariable Long memberId) {
         Member member = infoService.findMemberByMemberId(memberId);
+        model.addAttribute("glist", glist);
         model.addAttribute("memberId",memberId);
 
         if (member.getGoal() == null) {
             return "infoFirst";
         }
         return "/info/{memberId}";
-    }
-
-    @GetMapping("/info/{memberId}")
-    public String getInfoPage(Model model, @PathVariable Long memberId) {
-        model.addAttribute("glist", glist);
-        model.addAttribute("memberId", memberId);
-        return "info/{memberId}"; // info.html 템플릿으로 이동
     }
 }

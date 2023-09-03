@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import project.diabetes.domain.RecordsEntity;
 import project.diabetes.repository.RecordsRepository;
@@ -21,7 +22,7 @@ public class RecordsController {
     private RecordsRepository recordsRepository;
 
     @PostMapping("/record/{memberId}/save")
-    public String createRecord(RecordsDto recordsDto) {
+    public String createRecord(RecordsDto recordsDto, @PathVariable Long memberId) {
         System.out.println(recordsDto.toString());
 
         //1.Dto -> Entity로 변환
