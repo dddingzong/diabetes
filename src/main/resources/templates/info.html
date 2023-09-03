@@ -90,88 +90,115 @@
 <!-- main -->
 <div class="main">
     <!-- table -->
-    <div class="locate">
-        <div class="frame"  style="height : 300px; width : 500px">
-            <div class="container">
-                <div class="cardHeader">
-                    <h2>현재 개인 정보</h2>
+    <div class="details-container" style="display: flex;">
+        <div class="details">
+            <div class="form" style="height : 250px;">
+                <div class="container"  style = "margin-bottom: 5px;">
+                    <div class="cardHeader">
+                        <h2>현재 개인 정보</h2>
+                    </div>
+                    <div class="input-box">
+                        <label>id :  </label>
+                        <label>비밀번호 : </label>
+                    </div>
+                    <div class="input-box">
+                        <label>이름 :  </label>
+                        <label>나이 : </label>
+                    </div>
+                    <div class="input-box">
+                        <label>성별 : </label>
+                        <label>키: </label>
+                    </div>
+                    <div class="input-box">
+                        <label>몸무게: </label>
+                        <label>목표혈당: </label>
+                    </div>
+                    <div class="input-box">
+                        <a href="#" class="btn" id="empAdd">정보 변경</a>
+                    </div>
                 </div>
-                <div class="input-box">
-                    <label>이름(id) :  </label>
-                </div>
-                <div class="input-box">
-                    <label>비밀번호 : </label>
-                </div>
-                <div class="input-box">
-                    <label>키: </label>
-                </div>
-                <div class="input-box">
-                    <label>몸무게: </label>
-                </div>
-                <div class="input-box">
-                    <label>목표혈당: </label>
-                </div>
-                <div class="input-box">
-                    <a href="#" class="btn" id="empAdd">정보 변경</a>
+
+                <div class="container" th:action="@{/info/member}" th:method="post">
+                    <!-- 정보 변경 팝업 -->
+                    <div class="write-popup">
+                        <div class="editor">
+                            <div class="input-box">
+                                <label>비밀번호 : </label>
+                                <label>
+                                    <input name="pw" type="text" placeholder="변경할 비밀번호를 입력해주세요..." style="width: 300px; height : 30px">
+                                </label>
+                            </div>
+                            <div class="input-box">
+                                <label>키  : </label>
+                                <label>
+                                    <input name="height" type="number" placeholder="변경할 키를 입력해주세요..." style="width: 300px; height : 30px">
+                                </label>
+                            </div>
+                            <div class="input-box">
+                                <label> 몸무게 : </label>
+                                <label>
+                                    <input name="weight" type="number" placeholder="변경할 몸무게를 입력해주세요..." style="width: 300px; height : 30px">
+                                </label>
+                            </div>
+                            <div class="input-box">
+                                <label>목표혈당 : </label>
+                                <label>
+                                    <input name="goal" type="number" placeholder="변경할 목표혈당를 입력해주세요..." style="width: 300px; height : 30px">
+                                </label>
+                            </div>
+                            <div class="btn-area">
+                                <a href="http://localhost:8080/info" class="btn-cancel">취소</a>
+                                <a href="http://localhost:8080/info" class="btn-success" type="submit" onclick="">등록</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="container" th:action="@{/info/member}" th:method="post">
-                <!-- 정보 변경 팝업 -->
-                <div class="write-popup">
-                    <div class="editor">
-                        <div class="input-box">
-                            <label>이름(id) : </label>
-                            <label>
-                                <input name="id" type="text" placeholder="변경할 이름(id)를 입력해주세요..."  style="width: 300px; height : 30px">
-                            </label>
-                        </div>
-                        <div class="input-box">
-                            <label>비밀번호 : </label>
-                            <label>
-                                <input name="pw" type="text" placeholder="변경할 비밀번호를 입력해주세요..." style="width: 300px; height : 30px">
-                            </label>
-                        </div>
-                        <div class="input-box">
-                            <label>키  : </label>
-                            <label>
-                                <input name="height" type="number" placeholder="변경할 키를 입력해주세요..." style="width: 300px; height : 30px">
-                            </label>
-                        </div>
-                        <div class="input-box">
-                            <label> 몸무게 : </label>
-                            <label>
-                                <input name="weight" type="number" placeholder="변경할 몸무게를 입력해주세요..." style="width: 300px; height : 30px">
-                            </label>
-                        </div>
-                        <div class="input-box">
-                            <label>목표혈당 : </label>
-                            <label>
-                                <input name="goal" type="number" placeholder="변경할 목표혈당를 입력해주세요..." style="width: 300px; height : 30px">
-                            </label>
-                        </div>
-                        <div class="btn-area">
-                            <a href="http://localhost:8080/info" class="btn-cancel">취소</a>
-                            <a href="http://localhost:8080/info" class="btn-success" type="submit" onclick="">등록</a>
-                        </div>
+        <div class="details">
+            <div class="form" style="height : 250px; width: 700px">
+                <div class="container">
+                    <div class="cardHeader">
+                        <h2>Su.Balance 뉴스</h2>
+                    </div>
+                    <div class="news"> <!-- 뉴스 넣는 구역 -->
+                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1244&amp;page=1&amp;code=news" name="뉴스1-link">
+                            <p class="news_p" name="뉴스1-제목">[당뇨병학연구재단] 6.5km 걷기 캠페인 안내
+                                2023.05.08</p></a>
+                    </div>
+                    <div class="news">
+                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1245&amp;page=1&amp;code=news" alt="뉴스2-link">
+                            <p class="news_p" name="뉴스2-제목">[[당뇨병학연구재단] 젊은 당뇨인 꿈 장학금 신청 안내 (6/1~8/31)
+                                2023.05.08</p></a>
+                    </div>
+                    <div class="news">
+                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1187&amp;page=6&amp;code=news&amp;page=6" alt="뉴스3-link">
+                            <p class="news_p" name="뉴스3-제목">[심뇌혈관질환 예방관리주간] 라디오 공익광고 및 주간건강과질병 원고 게재
+                                2022.09.02</p></a>
+                    </div>
+                    <div class="news">
+                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1187&amp;page=6&amp;code=news&amp;page=6" alt="뉴스3-link">
+                            <p class="news_p" name="뉴스3-제목">[심뇌혈관질환 예방관리주간] 라디오 공익광고 및 주간건강과질병 원고 게재
+                                2022.09.02</p></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div class="locate">
-        <div class="frame" style="height : 400px; width: 1100px" onload="loadGraph()">
+    <div class="details" onload="loadGraph()">
+        <div class="form" style="height : 480px; width : 1300px;">
             <div class="container">
                 <div class="cardHeader">
                     <h2>Gunnuuu님의 혈당 그래프</h2>
                 </div>
-                <div id="graphContainer" style="width: 80%; height: 80%;"></div>
             </div>
+            <div id="graphContainer" style="width: 100%; height: 80%;"></div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
 
