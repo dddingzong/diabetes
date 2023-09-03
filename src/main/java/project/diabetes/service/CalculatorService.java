@@ -95,9 +95,8 @@ public class CalculatorService {
         return warning;
     }
 
-    public int calculateIcr(int carbohydrateSum,int bglucose, int amount, int glucose) {
-
-        return 12;
+    public int calculateIcr(int carbohydrateSum, int amount) {
+        return carbohydrateSum/amount;
     }
 
     public Member findMemberByMemberId(Long memberId){
