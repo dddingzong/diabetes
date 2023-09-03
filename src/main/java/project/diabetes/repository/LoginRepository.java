@@ -21,7 +21,6 @@ public class LoginRepository {
     private void createMember(String userId) {
         Member member = new Member();
         member.setUserId(userId);
-
         em.persist(member);
     }
 
