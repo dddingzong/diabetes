@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>어서오세요 Su.Balance입니다</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/info.css">
 </head>
 <body>
 <div class="navigation">
@@ -39,7 +41,7 @@
         </li>
     </ul>
 </div>
-<form class="container" th:action="@{/info/{id}(id=${memberId})}/save}" th:method="post">
+<form class="container" th:action="@{/info/{id}(id=${memberId})/save}" th:method="post">
 
     <!-- main -->
     <div class="main">
