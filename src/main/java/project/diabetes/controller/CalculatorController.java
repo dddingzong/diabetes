@@ -144,6 +144,15 @@ public class CalculatorController {
         return "calculatorTest";
     }
 
+    @GetMapping("/calculatorTest/{memberId}/reTest")
+    public String calculateRetestGet(Model model, @PathVariable Long memberId){
+        model.addAttribute("memberId",memberId);
+        model.addAttribute("DbWarning",
+                "식전 혈당과 식후 혈당의 차이가 너무 큽니다. 인슐린 투여량을 조절 후 다음 식사시간에 다시 테스트 해줏십시오");
+        return "calculatorTest";
+    }
+
+
     @PostMapping("/calculatorTest/{memberId}")
     public String calculateTest(Model model, @ModelAttribute(value = "FoodFormListDto") FoodFormListDto foodlist, int amount, int glucose, int bglucose, @PathVariable Long memberId) {
         model.addAttribute("memberId",memberId);
@@ -166,6 +175,11 @@ public class CalculatorController {
             }
         }
 
+        // 식전혈당과 식후혈당의 차이가 클 때 (재테스트)
+        if (((glucose - bglucose)>80)||(glucose-bglucose)<0){
+            return "redirect:/calculatorTest/"+memberId+"/reTest";
+        }
+
         for (int i = 0;i<namelist.size();i++) {
             // food_db 에서 name 별 carbohydrate 추출
             Food food = calculatorService.findByName(namelist.get(i));
@@ -183,7 +197,7 @@ public class CalculatorController {
 //        System.out.println("amount = " + amount);
 //        System.out.println("glucose = " + glucose);
 
-        int icr = calculatorService.calculateIcr(carbohydrateSum,bglucose,amount,glucose);
+        int icr = calculatorService.calculateIcr(carbohydrateSum,amount);
         // 이거 member 에 다시 넣어야함
         Member member = calculatorService.findMemberByMemberId(memberId);
         //db에 직접 넣기로 바꿔야할듯

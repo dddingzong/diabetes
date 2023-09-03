@@ -24,7 +24,4 @@ public class Member {
     private float goal;
 
     private String userId;
-
-
-
 }
