@@ -1,10 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>어서오세요 Su.Balance입니다</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/info.css">
 </head>
 <body>
+<div class="navigation">
+    <ul>
+        <li>
+            <a th:href="@{/info/{id}(id=${memberId})}">
+                <span class="icon"><ion-icon name="heart-circle-outline"></ion-icon></span>
+                <span class="title">Su.Balance</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/info/{id}(id=${memberId})}">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="title">홈</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/calculator/{id}(id=${memberId})}">
+                <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
+                <span class="title">투여량 계산</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/record/{id}(id=${memberId})}">
+                <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
+                <span class="title">혈당 등록</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/board/{id}(id=${memberId})}">
+                <span class="icon"><ion-icon name="list-outline"></ion-icon></span>
+                <span class="title">혈당 일지</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<form class="container" th:action="@{/info/{id}(id=${memberId})/save}" th:method="post">
 
+    <!-- main -->
+    <div class="main">
+        <!-- table -->
+        <div class="details">
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2><span th:text="${memberId}"></span>"님의 정보 등록</h2>
+                </div>
+
+                <a><font size ="5">오늘 날짜 : <span id="date"></span></font></a>
+                <table>
+                    <thead>
+                    <tr>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    이름
+                                    <input name="name" type="number" placeholder="이름을 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    나이
+                                    <input name="age" type="text" placeholder="나이를 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    성별
+                                    <input name="sex" type="number" placeholder="성별을 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    키
+                                    <input name="height" type="number" placeholder="키를 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    몸무게
+                                    <input name="weight" type="number" placeholder="몸무게를 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    목표혈당
+                                    <input name="goal" type="number" placeholder="목표혈당을 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="pagination">
+                    <button type="submit" onclick=""><a>개인정보에 추가하기</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 </body>
 </html>
