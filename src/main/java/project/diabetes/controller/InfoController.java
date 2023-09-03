@@ -1,19 +1,36 @@
 package project.diabetes.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
+import project.diabetes.domain.Member;
+import project.diabetes.service.InfoService;
 
 import static project.diabetes.repository.RecordsRepository.glist;
 
 @Controller
+@RequiredArgsConstructor
 public class InfoController {
+
+    private final InfoService infoService;
+
+    @GetMapping("/info/{memberId}")
+    public String info(Model model, @PathVariable Long memberId) {
+        Member member = infoService.findMemberByMemberId(memberId);
+        model.addAttribute("memberId",memberId);
+
+        if (member.getGoal() == null) {
+            return "infoFirst";
+        }
+        return "/info/{memberId}";
+    }
+
     @GetMapping("/info/{memberId}")
     public String getInfoPage(Model model, @PathVariable Long memberId) {
         model.addAttribute("glist", glist);
-        model.addAttribute("memberId",memberId);
-
-        return "info"; // info.html 템플릿으로 이동
+        model.addAttribute("memberId", memberId);
+        return "info/{memberId}"; // info.html 템플릿으로 이동
     }
 }

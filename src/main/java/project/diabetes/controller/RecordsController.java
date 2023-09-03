@@ -20,7 +20,7 @@ public class RecordsController {
     @Autowired //스프링 부트가 미리 생성해 놓은 객체를 가져다 자동 연결
     private RecordsRepository recordsRepository;
 
-    @PostMapping("/record/save")
+    @PostMapping("/record/{memberId}/save")
     public String createRecord(RecordsDto recordsDto) {
         System.out.println(recordsDto.toString());
 
@@ -41,15 +41,15 @@ public class RecordsController {
         System.out.println(glist);
 
         if (recordlist.size() <= 84) {
-            return "redirect:/board"; // board 템플릿으로 리다이렉트
+            return "redirect:/board/"+memberId; // board 템플릿으로 리다이렉트
         } else if (recordlist.size() <= 168){
-            return "redirect:/board2"; // board2 템플릿으로 리다이렉트
+            return "redirect:/board2/"+memberId; // board2 템플릿으로 리다이렉트
         } else{
-            return "redirect:/board3"; // board3 템플릿으로 리다이렉트
+            return "redirect:/board3/"+memberId; // board3 템플릿으로 리다이렉트
         }
     }
 
-    @GetMapping("/board")
+    @GetMapping("/board/{memberId}")
     public String myPage(Model model) {
         List<Integer> numericRecordList = new ArrayList<>();
         for (int i = 0; i < Math.min(84, recordlist.size()); i++) {
@@ -61,9 +61,9 @@ public class RecordsController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board";
+        return "board/{memberId}";
     }
-    @GetMapping("/board2")
+    @GetMapping("/board2/{memberId}")
     public String myPage2(Model model) {
         List<Integer> numericRecordList = new ArrayList<>();
         for (int i = 84; i < Math.min(168, recordlist.size()); i++) {
@@ -75,10 +75,10 @@ public class RecordsController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board2";
+        return "board2/{memberId}";
     }
 
-    @GetMapping("/board3")
+    @GetMapping("/board3/{memberId}")
     public String myPage3(Model model) {
         List<Integer> numericRecordList = new ArrayList<>();
         for (int i = 168; i < recordlist.size(); i++) {
@@ -90,14 +90,14 @@ public class RecordsController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board2";
+        return "board2/{memberId}";
     }
 
-    @GetMapping("/graph") //그래프
+    @GetMapping("/graph/{memberId}") //그래프
     public String graph(Model model) {
         model.addAttribute("glist", glist);
         System.out.println(glist);
-        return "graph";
+        return "graph/{memberId}";
     }
 }
 
