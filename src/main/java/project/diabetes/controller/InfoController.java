@@ -25,6 +25,7 @@ public class InfoController {
         List<String> glist = (List<String>) session.getAttribute("glist"); // 세션에서 glist 가져오기
         model.addAttribute("glist", glist);
         model.addAttribute("memberId",memberId);
+        model.addAttribute("member",member);
 
         if (member.getGoal() == null) {
             return "infoFirst";
