@@ -30,6 +30,8 @@ public class InfoController {
         infoService.alterMemberInfo(member);
         return  "/info/{memberId}";
     }
+
+
     @GetMapping("/info/{memberId}")
     public String info(Model model, HttpSession session, @PathVariable Long memberId) {
         Member member = infoService.findMemberByMemberId(memberId);
