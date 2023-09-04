@@ -8,18 +8,16 @@ import project.diabetes.repository.InfoRepository;
 
 @Service
 @RequiredArgsConstructor
-public class InfoService{
-        private final InfoRepository infoRepository;
+public class InfoService {
+    private final InfoRepository infoRepository;
 
-        @Transactional
-        public void saveMemberInfo(Member member){
-            infoRepository.saveMemberInfo(member);
-        }
-        public Member findMemberByMemberId(Long memberId){
-            return infoRepository.findMemberByMemberId(memberId);
-        }
+    @Transactional
+    public void saveMemberInfo(String name,int age, String sex, float height, float weight,Integer goal, Long memberId) {
+        infoRepository.saveMemberInfo(name,age,sex,height,weight,goal, memberId);
+    }
 
-        public void alterMemberInfo(Member member) {
-            infoRepository.alterMemberInfo(member);
-        }
+    public Member findMemberByMemberId(Long memberId) {
+        return infoRepository.findMemberByMemberId(memberId);
+    }
+
 }

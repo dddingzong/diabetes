@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import project.diabetes.domain.Member;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -12,26 +13,24 @@ public class InfoRepository {
 
     private final EntityManager em;
 
-    public Member findMemberByMemberId(Long memberId){
+    public Member findMemberByMemberId(Long memberId) {
         return em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Member.class)
                 .setParameter("memberId", memberId)
                 .getSingleResult();
     }
 
-    public void saveMemberInfo(Member member) {
-        em.persist(member);
-    }
+    @Transactional
+    public void saveMemberInfo(String name,int age, String sex, float height, float weight,Integer goal, Long memberId) {
+        Member member = em.find(Member.class, memberId);
 
-    public void alterMemberInfo(Member updatedMember) {
-        Member existingMember = em.find(Member.class, updatedMember.getId());
-        existingMember.setName(updatedMember.getName());
-        existingMember.setAge(updatedMember.getAge());
-        existingMember.setSex(updatedMember.getSex());
-        existingMember.setHeight(updatedMember.getHeight());
-        existingMember.setWeight(updatedMember.getWeight());
-        existingMember.setGoal(updatedMember.getGoal());
-
-        // 변경 내용을 데이터베이스에 반영
-        em.merge(existingMember);
+        // 엔티티의 필드 값을 업데이트
+        member.setName(name);
+        member.setAge(age);
+        member.setSex(sex);
+        member.setHeight(height);
+        member.setWeight(weight);
+        member.setGoal(goal);
     }
 }
+
+

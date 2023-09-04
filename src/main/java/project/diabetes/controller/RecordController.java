@@ -15,24 +15,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class RecordController {
-
-    List<String> recordlist = new ArrayList<>();
-    List<String> glist = new ArrayList<>();
-
     private final RecordService recordService;
 
+    @GetMapping("/record/{memberId}")
+    public String Record(Model model, @PathVariable Long memberId){
+        model.addAttribute("memberId",memberId);
+        return "record";
+    }
+
     @PostMapping("/record/{memberId}/save")
-    public String createRecord(Record record, @PathVariable Long memberId, Model model) {
+    public String saveRecord(Record record, @PathVariable Long memberId, Model model) {
+        model.addAttribute("memberId",memberId);
         recordService.saveRecord(record);
 
-        //recordlist로 amount, glucose 가져옴
-        recordlist.add(String.valueOf(record.getAmount()));
-        recordlist.add(String.valueOf(record.getGlucose()));
-
-        //glist로 glucose만 가져옴
-        glist.add(String.valueOf(record.getGlucose()));
-        model.addAttribute("glist", glist);
-
+        List<String> recordlist = recordService.findAmountByMemberId(memberId);
 
         if (recordlist.size() <= 84) {
             return "redirect:/board/"+memberId; // board 템플릿으로 리다이렉트
@@ -44,8 +40,10 @@ public class RecordController {
     }
 
     @GetMapping("/board/{memberId}")
-    public String myPage(Model model) {
+    public String board1(Model model, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
         List<Integer> numericRecordList = new ArrayList<>();
+        List<String> recordlist = recordService.findAmountByMemberId(memberId);
         for (int i = 0; i < Math.min(84, recordlist.size()); i++) {
             String record = recordlist.get(i);
             try {
@@ -55,11 +53,13 @@ public class RecordController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board/{memberId}";
+        return "board";
     }
     @GetMapping("/board2/{memberId}")
-    public String myPage2(Model model) {
+    public String board2(Model model, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
         List<Integer> numericRecordList = new ArrayList<>();
+        List<String> recordlist = recordService.findAmountByMemberId(memberId);
         for (int i = 84; i < Math.min(168, recordlist.size()); i++) {
             String record = recordlist.get(i);
             try {
@@ -69,12 +69,14 @@ public class RecordController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board2/{memberId}";
+        return "board2";
     }
 
     @GetMapping("/board3/{memberId}")
-    public String myPage3(Model model) {
+    public String board3(Model model, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
         List<Integer> numericRecordList = new ArrayList<>();
+        List<String> recordlist = recordService.findAmountByMemberId(memberId);
         for (int i = 168; i < recordlist.size(); i++) {
             String record = recordlist.get(i);
             try {
@@ -84,13 +86,15 @@ public class RecordController {
             }
         }
         model.addAttribute("numericRecordList", numericRecordList);
-        return "board2/{memberId}";
+        return "board3";
     }
 
     @GetMapping("/graph/{memberId}") //그래프
-    public String graph(Model model) {
+    public String graph(Model model, @PathVariable Long memberId) {
+        model.addAttribute("memberId",memberId);
+        List<String> glist = recordService.findGlucoseByMemberId(memberId);
         model.addAttribute("glist", glist);
-        return "graph/{memberId}";
+        return "graph";
     }
 }
 

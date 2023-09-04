@@ -21,7 +21,7 @@ public class InfoController {
 
     @PostMapping("/info/{memberId}/save")
     public String saveInfo(Member member, @PathVariable Long memberId) {
-        infoService.saveMemberInfo(member);
+        infoService.saveMemberInfo(memberId);
         return  "/info/{memberId}";
     }
 
@@ -37,10 +37,9 @@ public class InfoController {
         model.addAttribute("glist", glist);
         model.addAttribute("memberId",memberId);
 
-//        if (member.getGoal() == null) {
-//            return "infoFirst";
-//        }
-
-        return "info";
+        if (member.getGoal() == null) {
+            return "infoFirst";
+        }
+        return "/info/{memberId}";
     }
 }

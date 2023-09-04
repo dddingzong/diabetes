@@ -24,6 +24,11 @@ public class LoginRepository {
         em.persist(member);
     }
 
+    public Member findMemberByMemberId(Long memberId){
+        return em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Member.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
     public Member findMember(String login_userId){
         return em.createQuery("SELECT m FROM Member m WHERE m.userId = :userId", Member.class)
                 .setParameter("userId", login_userId)
@@ -58,5 +63,4 @@ public class LoginRepository {
                 .setParameter("user_id",login_userId)
                 .getSingleResult();
     }
-
 }

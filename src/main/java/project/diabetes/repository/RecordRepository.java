@@ -2,6 +2,7 @@ package project.diabetes.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import project.diabetes.domain.Member;
 import project.diabetes.domain.Record;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,8 @@ public class RecordRepository {
 
     private final EntityManager em;
 
-    public Record findMemberByMemberId(Long memberId) {
-        return em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
+    public Member findMemberByMemberId(Long memberId){
+        return em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Member.class)
                 .setParameter("memberId", memberId)
                 .getSingleResult();
     }
@@ -25,5 +26,15 @@ public class RecordRepository {
         em.persist(record);
     }
 
+    public List<String> findAmountByMemberId(Long memberId) {
+        return (List<String>) em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
+                .setParameter("memberAmount", memberId)
+                .getSingleResult();
+    }
 
+    public List<String> findGlucoseByMemberId(Long memberId) {
+        return (List<String>) em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
+                .setParameter("memberGlucose", memberId)
+                .getSingleResult();
+    }
 }
