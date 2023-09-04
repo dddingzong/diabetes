@@ -21,7 +21,7 @@ public class InfoController {
 
     @PostMapping("/info/{memberId}/save")
     public String saveInfo(Member member, @PathVariable Long memberId) {
-        infoService.saveMemberInfo(member);
+        infoService.saveMemberInfo(memberId);
         return  "/info/{memberId}";
     }
 
