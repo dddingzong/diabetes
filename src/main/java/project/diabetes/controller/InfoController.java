@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import project.diabetes.domain.Member;
 import project.diabetes.service.InfoService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -19,6 +18,18 @@ public class InfoController {
 
     private final InfoService infoService;
 
+
+    @PostMapping("/info/{memberId}/save")
+    public String saveInfo(Member member, @PathVariable Long memberId) {
+        infoService.saveMemberInfo(member);
+        return  "/info/{memberId}";
+    }
+
+    @PostMapping("/info/{memberId}/alter")
+    public String alterInfo(Member member, @PathVariable Long memberId) {
+        infoService.alterMemberInfo(member);
+        return  "/info/{memberId}";
+    }
     @GetMapping("/info/{memberId}")
     public String info(Model model, HttpSession session, @PathVariable Long memberId) {
         Member member = infoService.findMemberByMemberId(memberId);
@@ -29,25 +40,6 @@ public class InfoController {
         if (member.getGoal() == null) {
             return "infoFirst";
         }
-        return "info";
+        return "/info/{memberId}";
     }
-
-    @GetMapping("/infoFirst/{memberId}")
-    public String infoFirst(Model model, @PathVariable Long memberId) {
-        Member member = infoService.findMemberByMemberId(memberId);
-        model.addAttribute("memberId",memberId);
-        model.addAttribute("member",member);
-
-        return "info";
-    }
-    @PostMapping("/infoFirst/{memberId}/save")
-    public String saveMemberInfo(Model model, @PathVariable Long memberId) {
-        Member member = infoService.findMemberByMemberId(memberId);
-        model.addAttribute("memberId",memberId);
-        model.addAttribute("member",member);
-
-//        infoService.saveMemberInfo(name,age,sex,height,weight,goal, memberId);
-        return "info";
-    }
-
 }
