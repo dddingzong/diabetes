@@ -25,8 +25,9 @@ public class InfoController {
         List<String> glist = (List<String>) session.getAttribute("glist"); // 세션에서 glist 가져오기
         model.addAttribute("glist", glist);
         model.addAttribute("memberId",memberId);
+        model.addAttribute("member", member);
 
-        if (member.getGoal() == null) {
+        if (member.getGoal()  == null) {
             return "infoFirst";
         }
         return "info";
@@ -37,16 +38,29 @@ public class InfoController {
         Member member = infoService.findMemberByMemberId(memberId);
         model.addAttribute("memberId",memberId);
         model.addAttribute("member",member);
+
+        if (member.getGoal() == null){
+            return "redirect:/infoFirst/" + memberId;
+        }
+
         return "info";
     }
     @PostMapping("/infoFirst/{memberId}/save")
-    public String saveMemberInfo(Model model, @PathVariable Long memberId) {
+    public String saveMemberInfo(Model model, @PathVariable Long memberId,
+                                 @RequestParam String name,
+                                 @RequestParam int age,
+                                 @RequestParam String sex,
+                                 @RequestParam float height,
+                                 @RequestParam float weight,
+                                 @RequestParam Integer goal) {
         Member member = infoService.findMemberByMemberId(memberId);
         model.addAttribute("memberId",memberId);
         model.addAttribute("member",member);
 
-//        infoService.saveMemberInfo(name,age,sex,height,weight,goal, memberId);
-        return "info";
+        infoService.saveMemberInfo(name,age,sex,height,weight,goal, memberId);
+
+
+        return "redirect:/info/"+memberId;
     }
 
 }
