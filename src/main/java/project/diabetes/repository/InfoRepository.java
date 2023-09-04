@@ -2,10 +2,12 @@ package project.diabetes.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import project.diabetes.domain.FoodRecord;
 import project.diabetes.domain.Member;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,17 +21,18 @@ public class InfoRepository {
                 .getSingleResult();
     }
 
-    @Transactional
-    public void saveMemberInfo(String name,int age, String sex, float height, float weight,Integer goal, Long memberId) {
-        Member member = em.find(Member.class, memberId);
+    public void saveMember(Member member){
+        em.merge(member);
+    }
 
-        // 엔티티의 필드 값을 업데이트
-        member.setName(name);
-        member.setAge(age);
-        member.setSex(sex);
-        member.setHeight(height);
-        member.setWeight(weight);
-        member.setGoal(goal);
+
+    public void flush(){
+        em.flush();
+    }
+
+    public List<Member> findAllMember() {
+        return em.createQuery("select r from Member r")
+                .getResultList();
     }
 }
 

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import project.diabetes.domain.Member;
 import project.diabetes.domain.Record;
 import project.diabetes.service.RecordService;
 
@@ -25,7 +26,9 @@ public class RecordController {
 
     @PostMapping("/record/{memberId}/save")
     public String saveRecord(Record record, @PathVariable Long memberId, Model model) {
+        Member member = recordService.findMemberByMemberId(memberId);
         model.addAttribute("memberId",memberId);
+        model.addAttribute("member", member);
         recordService.saveRecord(record);
 
         List<String> recordlist = recordService.findAmountByMemberId(memberId);
