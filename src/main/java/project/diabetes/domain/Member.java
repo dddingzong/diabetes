@@ -23,6 +23,5 @@ public class Member {
     private float height;
     private float weight;
     private Integer goal;
-
     private String userId;
 }

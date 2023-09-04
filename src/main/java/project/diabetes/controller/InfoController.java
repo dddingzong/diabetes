@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import project.diabetes.domain.Member;
 import project.diabetes.service.InfoService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -27,10 +26,10 @@ public class InfoController {
         model.addAttribute("memberId",memberId);
         model.addAttribute("member", member);
 
-        if (member.getGoal()  == null) {
-            return "infoFirst";
+        if (member.getGoal()  != null) {
+            return "info";
         }
-        return "info";
+        return "infoFirst";
     }
 
     @GetMapping("/infoFirst/{memberId}")
@@ -38,11 +37,6 @@ public class InfoController {
         Member member = infoService.findMemberByMemberId(memberId);
         model.addAttribute("memberId",memberId);
         model.addAttribute("member",member);
-
-        if (member.getGoal() == null){
-            return "redirect:/infoFirst/" + memberId;
-        }
-
         return "info";
     }
     @PostMapping("/infoFirst/{memberId}/save")
@@ -57,10 +51,16 @@ public class InfoController {
         model.addAttribute("memberId",memberId);
         model.addAttribute("member",member);
 
-        infoService.saveMemberInfo(name,age,sex,height,weight,goal, memberId);
+            member.setName(name);
+            member.setAge(age);
+            member.setSex(sex);
+            member.setHeight(height);
+            member.setWeight(weight);
+            member.setGoal(goal);
 
+            infoService.saveMember(member);
+            infoService.flush();
 
-        return "redirect:/info/"+memberId;
+        return "redirect:calculator/" + memberId;
     }
-
 }
