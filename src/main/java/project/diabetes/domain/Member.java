@@ -17,7 +17,7 @@ public class Member {
     private long id;
     private String name;
     private int age;
-    private char sex;
+    private String sex;
     private Integer icr;
     private float height;
     private float weight;
