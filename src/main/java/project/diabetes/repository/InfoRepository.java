@@ -22,7 +22,6 @@ public class InfoRepository {
                 .getSingleResult();
     }
 
-
     public void flush(){
         em.flush();
     }

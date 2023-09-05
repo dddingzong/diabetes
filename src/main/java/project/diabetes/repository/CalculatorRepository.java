@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import project.diabetes.domain.Food;
 import project.diabetes.domain.FoodRecord;
 import project.diabetes.domain.Member;
+import project.diabetes.domain.Result;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -62,5 +63,15 @@ public class CalculatorRepository{
 
     public void flush(){
         em.flush();
+    }
+
+    public void saveFirstResult(int icr, Long memberId, int goal, int glucose) {
+        Result result = new Result();
+        result.setIcr(icr);
+        result.setIcr_update(icr);
+        result.setMember_id(memberId);
+        result.setGoal(goal);
+        result.setGlucose(glucose);
+        em.persist(result);
     }
 }

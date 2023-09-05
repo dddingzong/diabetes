@@ -24,4 +24,5 @@ public class Member {
     private Integer goal;
     private String userId;
     private String userPassword;
+    private int recentAmount;
 }

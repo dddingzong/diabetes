@@ -19,8 +19,8 @@ public class RecordService{
         recordRepository.saveRecord(record);
     }
 
-    public List<String> findAmountByMemberId(Long memberId) {
-        return recordRepository.findAmountByMemberId(memberId);
+    public List<Record> findRecordByMemberId(Long memberId) {
+        return recordRepository.findRecordByMemberId(memberId);
     }
 
     public List<String> findGlucoseByMemberId(Long memberId) {

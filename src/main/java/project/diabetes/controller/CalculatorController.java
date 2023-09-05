@@ -122,16 +122,18 @@ public class CalculatorController {
         model.addAttribute("warning",warning);
 
         // api 값 보내주기
-        // 승환이 한테 보내야하는 값: 탄수합(carbohydrateSum), 식사 여부(meal), memberId
-        if (meal.equals("식사")){ // 식사면 Y 간식이면 N
-            meal = "Y";
+        // 승환이 한테 보내야하는 값: 탄수합(carbohydrateSum), 식사 여부(snack), memberId
+        int snack;
+
+        if (meal.equals("식사")){ // 식사면 Y 간식이면 N // 식사면 0 간식이면 1
+            snack = 0;
         } else {
-            meal = "N";
+            snack = 1;
         }
 //        System.out.println("carbohydrateSum = " + carbohydrateSum); // 수정해야됨
-//        System.out.println("meal = " + meal);
+//        System.out.println("snack = " + snack);
 //        System.out.println("memberId = " + memberId);
-
+        model.addAttribute("DbWarning", "정확한 결과를 위해 혈당 등록을 통하여 혈당 일지를 작성해주세요.");
         return "/calculator";
     }
 
@@ -201,6 +203,9 @@ public class CalculatorController {
         //db에 직접 넣기로 바꿔야할듯
         member.setIcr(icr);
         calculatorService.flush();
+
+        int goal = member.getGoal();
+        calculatorService.saveFirstResult(icr,memberId,goal,glucose);
 
         String originalUrl = "redirect:/info/";
         return originalUrl+memberId;

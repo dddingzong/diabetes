@@ -99,7 +99,7 @@
                             <h2>현재 개인 정보</h2>
                         </div>
                         <label class="user_info">아이디 :  <span class="info_input" name="userId" th:text="*{userId}"></span></label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <label class="user_info">비밀번호 : <input class="info_input" name="password" th:field="*{userPassword}"></label><br><br>
                         <label class="user_info">이름 :  <span class="info_input" name="name" th:text="*{name}"></span></label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -118,47 +118,28 @@
         </div>
     </div>
 
-        <div class="details">
-            <div class="form" style="height : 250px; width: 700px">
-                <div class="container">
-                    <div class="cardHeader">
-                        <h2>Su.Balance 뉴스</h2>
-                    </div>
-                    <div class="news"> <!-- 뉴스 넣는 구역 -->
-                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1244&amp;page=1&amp;code=news" name="뉴스1-link">
-                            <p class="news_p" name="뉴스1-제목">[당뇨병학연구재단] 6.5km 걷기 캠페인 안내
-                                2023.05.08</p></a>
-                    </div>
-                    <div class="news">
-                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1245&amp;page=1&amp;code=news" alt="뉴스2-link">
-                            <p class="news_p" name="뉴스2-제목">[[당뇨병학연구재단] 젊은 당뇨인 꿈 장학금 신청 안내 (6/1~8/31)
-                                2023.05.08</p></a>
-                    </div>
-                    <div class="news">
-                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1187&amp;page=6&amp;code=news&amp;page=6" alt="뉴스3-link">
-                            <p class="news_p" name="뉴스3-제목">[심뇌혈관질환 예방관리주간] 라디오 공익광고 및 주간건강과질병 원고 게재
-                                2022.09.02</p></a>
-                    </div>
-                    <div class="news">
-                        <a href="https://diabetes.or.kr/bbs/?code=news&amp;mode=view&amp;number=1187&amp;page=6&amp;code=news&amp;page=6" alt="뉴스3-link">
-                            <p class="news_p" name="뉴스3-제목">[심뇌혈관질환 예방관리주간] 라디오 공익광고 및 주간건강과질병 원고 게재
-                                2022.09.02</p></a>
-                    </div>
+    <div class="details">
+        <div class="form" style="height : 250px; width: 1080px">
+            <div class="container">
+                <div class="cardHeader">
+                    <h2>Su.Balance는 어떤 프로그램인가요?</h2>
                 </div>
+                <span style="font-size:15px;">
+                    <strong>
+                    Sugar Balance는 이용자의 지속적인 혈당 수치 변화를 파악하여 각 이용자별 인슐린-탄수화물비(ICR)를 예측, 계산하는 AI 프로그램입니다.<br>
+                    제 1형 당뇨병 환자는 섭취하는 탄수화물 양에 따라 적정 용량의 인슐린을 식전에 투여하며, 매 끼니 섭취 시 적정 인슐린 투여량 계산을 위해 나눗셈 및 곱셈 등, 수학 계산식이 요구됩니다.<br>
+                    Sugar Balance는 사용자가 섭취하는 음식 종류와 무게를 입력하면 적정 인슐린 투여량을 계산해주며, 식후 두시간 혈당을 입력받아 AI 프로그램을 통해 모니터링 하여 사용자 신체에 지속적으로 변화하는 인슐린-탄수화물비를 예측해 보다 정확한 인슐린 투여량을 안내합니다.
+                    <br><br>
+                    *인슐린-탄수화물비(ICR)란?<br>
+                    인슐린-탄수화물비(ICR)는 초단기작용인슐린 1단위를 주사했을 때 섭취할 수 있는 탄수화물의 양이며, 이 비율을 식사에 적용하여 적정 식전 인슐린 투여량을 구할 수 있습니다.
+                    </strong>
+                </span>
             </div>
         </div>
     </div>
 
-<!--    <div class="details" onload="loadGraph()">-->
-<!--        <div class="form" style="height : 480px; width : 1300px;">-->
-<!--            <div class="container">-->
-<!--                <div class="cardHeader">-->
-<!--                    <h2>Gunnuuu님의 혈당 그래프</h2>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="graphContainer" style="width: 100%; height: 80%;"></div>-->
-<!--        </div>-->
-<!--    </div>-->
+</div>
+
 
 
 </body>

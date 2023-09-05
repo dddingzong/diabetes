@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.diabetes.domain.Food;
 import project.diabetes.domain.FoodRecord;
 import project.diabetes.domain.Member;
+import project.diabetes.domain.Result;
 import project.diabetes.repository.CalculatorRepository;
 
 import java.time.LocalDateTime;
@@ -106,5 +107,10 @@ public class CalculatorService {
     @Transactional
     public void flush(){
         calculatorRepository.flush();
+    }
+
+    @Transactional
+    public void saveFirstResult(int icr, Long memberId, int goal, int glucose) {
+        calculatorRepository.saveFirstResult(icr,memberId,goal,glucose);
     }
 }

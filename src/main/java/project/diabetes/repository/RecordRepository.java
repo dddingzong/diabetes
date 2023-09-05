@@ -26,10 +26,10 @@ public class RecordRepository {
         em.persist(record);
     }
 
-    public List<String> findAmountByMemberId(Long memberId) {
-        return (List<String>) em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
-                .setParameter("memberId", memberId)
-                .getSingleResult();
+    public List<Record> findRecordByMemberId(Long memberId) {
+        return em.createQuery("SELECT r FROM Record r where r.member_id=:member_id Order By id DESC", Record.class)
+                .setParameter("member_id", memberId)
+                .getResultList();
     }
 
     public List<String> findGlucoseByMemberId(Long memberId) {

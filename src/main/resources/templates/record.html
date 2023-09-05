@@ -58,14 +58,14 @@
     </ul>
 </div>
 
-<form class="container" th:action="@{/record/{id}(id=${memberId})/save}" th:method="post">
+<form class="container" th:action="@{/record/save/{id}(id=${memberId})}" th:method="post">
     <!-- main -->
     <div class="main">
         <!-- table -->
         <div class="details">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Gunnuuu님의 혈당 등록</h2>
+                    <h2>혈당 등록하기</h2>
                 </div>
 
                 <a><font size ="5">오늘 날짜 : <span id="date"></span></font></a>
@@ -75,15 +75,15 @@
                         <td>
                         </td>
                     </tr>
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <div class="input-box">-->
-<!--                                <label>-->
-<!--                                    <input name="amount" type="number" placeholder="인슐린 투여량을 입력하시오" style="width:500px;height:60px;font-size:30px;">-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                        <td>-->
-<!--                    </tr>-->
+                    <tr>
+                        <td>
+                            <div class="input-box">
+                                <label>
+                                    <input name="amount" type="number" th:value="${recentAmount}" placeholder="인슐린 투여량을 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                </label>
+                            </div>
+                        <td>
+                    </tr>
                     <tr>
                         <td>
                             <div class="input-box">

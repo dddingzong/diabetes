@@ -4,9 +4,9 @@
     padding: 20px;
     margin-top: 10px;
 }
-.details .form{
+.form{
     position: relative;
-    width: 90%;
+    width: 600px;
     background-color: var(--white);
     padding: 20px;
     box-shadow: 0 7px 25px rgba(0,0,0,0.2);
