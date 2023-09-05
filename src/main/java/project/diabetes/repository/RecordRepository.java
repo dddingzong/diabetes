@@ -28,13 +28,13 @@ public class RecordRepository {
 
     public List<String> findAmountByMemberId(Long memberId) {
         return (List<String>) em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
-                .setParameter("memberAmount", memberId)
+                .setParameter("memberId", memberId)
                 .getSingleResult();
     }
 
     public List<String> findGlucoseByMemberId(Long memberId) {
         return (List<String>) em.createQuery("SELECT m FROM Member m WHERE m.id = :memberId", Record.class)
-                .setParameter("memberGlucose", memberId)
+                .setParameter("memberId", memberId)
                 .getSingleResult();
     }
 }

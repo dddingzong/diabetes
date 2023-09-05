@@ -58,7 +58,7 @@
     </ul>
 </div>
 
-<form class="container" th:action="@{/record/{id}(id=${memberId})/save}" th:object="${record}" th:method="post">
+<form class="container" th:action="@{/record/{id}(id=${memberId})/save}" th:method="post">
     <!-- main -->
     <div class="main">
         <!-- table -->
@@ -88,7 +88,7 @@
                         <td>
                             <div class="input-box">
                                 <label>
-                                    <input name="glucose" type="number" th:field="*{glucose}" placeholder="식후혈당을 입력하시오" style="width:500px;height:60px;font-size:30px;">
+                                    <input name="glucose" type="number" placeholder="식후혈당을 입력하시오" style="width:500px;height:60px;font-size:30px;">
                                 </label>
                             </div>
                         </td>

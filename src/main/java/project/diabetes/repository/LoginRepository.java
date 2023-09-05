@@ -15,12 +15,13 @@ public class LoginRepository {
 
     public void signUp(Login login){
         em.persist(login);
-        createMember(login.getUserId());
+        createMember(login.getUserId(),login.getUserPassword());
     }
 
-    private void createMember(String userId) {
+    private void createMember(String userId,String userPassword) {
         Member member = new Member();
         member.setUserId(userId);
+        member.setUserPassword(userPassword);
         em.persist(member);
     }
 

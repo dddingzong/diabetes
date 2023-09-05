@@ -3,6 +3,7 @@ package project.diabetes.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import project.diabetes.domain.FoodRecord;
+import project.diabetes.domain.Login;
 import project.diabetes.domain.Member;
 
 import javax.persistence.EntityManager;
@@ -21,10 +22,6 @@ public class InfoRepository {
                 .getSingleResult();
     }
 
-    public void saveMember(Member member){
-        em.merge(member);
-    }
-
 
     public void flush(){
         em.flush();
@@ -33,6 +30,12 @@ public class InfoRepository {
     public List<Member> findAllMember() {
         return em.createQuery("select r from Member r")
                 .getResultList();
+    }
+
+    public Login finLoginByUserId(String userId) {
+        return em.createQuery("select l from Login l where l.userId=:userId",Login.class)
+                .setParameter("userId",userId)
+                .getSingleResult();
     }
 }
 

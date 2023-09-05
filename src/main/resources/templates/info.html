@@ -93,67 +93,30 @@
     <div class="details-container" style="display: flex;">
         <div class="details">
             <div class="form" style="height : 250px;">
-                <div class="container"  style = "margin-bottom: 5px;" >
-                    <div class="cardHeader">
-                        <h2>현재 개인 정보</h2>
-                    </div>
-                    <div class="input-box">
-                        <label>id :  <input th:field="${userId}"></label>
-                        <label>비밀번호 : <input th:field="${pw}"></label>
-                    </div>
-                    <div class="input-box">
-                        <label>이름 :  <input th:field="${name}"></label>
-                        <label>나이 : <input th:field="${age}"></label>
-                    </div>
-                    <div class="input-box">
-                        <label>성별 : <input th:field="${sex}"></label>
-                        <label>키: <input th:field="${height}"></label>
-                    </div>
-                    <div class="input-box">
-                        <label>몸무게: <input th:field="${weight}"></label>
-                        <label>목표혈당: <input th:field="${goal}"></label>
-                    </div>
-                    <div class="input-box">
-                        <a href="#" type="submit" onclick="" class="btn" id="empAdd">정보 변경</a>
-                    </div>
-                </div>
-
-                    <!-- 정보 변경 팝업 -->
-                    <div class="write-popup">
-                        <div class="editor">
-                            <div class="input-box">
-                                <label>비밀번호 : </label>
-                                <label>
-                                    <input name="pw" type="text" placeholder="변경할 비밀번호를 입력해주세요..." style="width: 300px; height : 30px">
-                                </label>
-                            </div>
-                            <div class="input-box">
-                                <label>키  : </label>
-                                <label>
-                                    <input name="height" type="number" placeholder="변경할 키를 입력해주세요..." style="width: 300px; height : 30px">
-                                </label>
-                            </div>
-                            <div class="input-box">
-                                <label> 몸무게 : </label>
-                                <label>
-                                    <input name="weight" type="number" placeholder="변경할 몸무게를 입력해주세요..." style="width: 300px; height : 30px">
-                                </label>
-                            </div>
-                            <div class="input-box">
-                                <label>목표혈당 : </label>
-                                <label>
-                                    <input name="goal" type="number" placeholder="변경할 목표혈당를 입력해주세요..." style="width: 300px; height : 30px">
-                                </label>
-                            </div>
-                            <div class="btn-area">
-                                <a href="http://localhost:8080/info/" class="btn-cancel">취소</a>
-                                <a href="http://localhost:8080/info" class="btn-success" type="submit" onclick="">등록</a>
-                            </div>
+                <form th:action="@{/info/update/{id}(id=${memberId})}" method="post">
+                    <div class="container"  style = "margin-bottom: 5px;" th:object="${member}" >
+                        <div class="cardHeader">
+                            <h2>현재 개인 정보</h2>
                         </div>
+                        <label class="user_info">아이디 :  <span class="info_input" name="userId" th:text="*{userId}"></span></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="user_info">비밀번호 : <input class="info_input" name="password" th:field="*{userPassword}"></label><br><br>
+                        <label class="user_info">이름 :  <span class="info_input" name="name" th:text="*{name}"></span></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="user_info">나이 : <span class="info_input" name="age" th:text="*{age}"></span></label><br><br>
+                        <label class="user_info">성별 : <span class="info_input" name="sex" th:text="*{sex}"></span></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="user_info">키: <span class="info_input" name="height" th:text="*{height}"></span></label><br><br>
+                        <label class="user_info">몸무게: <span class="info_input" name="weight" th:text="*{weight}"></span></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="user_info">목표혈당: <input class="info_input" name="goal" th:field="*{goal}"></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn" id="empAdd">정보 변경</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+    </div>
 
         <div class="details">
             <div class="form" style="height : 250px; width: 700px">
