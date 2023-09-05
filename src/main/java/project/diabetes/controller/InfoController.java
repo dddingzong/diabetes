@@ -26,7 +26,7 @@ public class InfoController {
         model.addAttribute("memberId",memberId);
         model.addAttribute("member", member);
 
-        if (member.getGoal()  != null) {
+        if (member.getGoal()  == null) {
             return "info";
         }
         return "infoFirst";

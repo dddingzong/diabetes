@@ -9,6 +9,12 @@ import project.diabetes.domain.FoodRecord;
 import project.diabetes.domain.Member;
 import project.diabetes.service.CalculatorService;
 
+import org.springframework.web.client.RestTemplate;// ㅇ
+import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired; //ㅇ
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +23,10 @@ import java.util.List;
 public class CalculatorController {
 
     private final CalculatorService calculatorService;
+
+//    @Autowired
+//    private final RestTemplate restTemplate; //승환이가 필요한 내용(디비x)
+
 
     @GetMapping("/calculator/{memberId}")  //인슐린 계산 페이지
     public String calculator(Model model, @PathVariable Long memberId){
@@ -36,6 +46,36 @@ public class CalculatorController {
         model.addAttribute("progress_Protein",progress_Protein);
         model.addAttribute("progress_Fat",progress_Fat);
 
+//        //파이썬에 요청하기
+//        String pythonServerUrl = "http://파이썬서버주소/파이썬메서드주소"; //승환이가 연 서버 주소/메서드주소
+//
+//        // POST 요청 헤더 설정
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON); // 필요에 따라 적절한 미디어 타입 설정
+//
+//        // 파라미터 설정 (이memberId를 JSON 형식으로 보내줘서 그 멤버별 필터링 가능하게 해주기 -> 이때 받는 정보도 같이 주면 너무 많으니 이걸가지고 승환이가
+//        // DB에서 해당 멤버의 요청값 가져오기 이떄 문제 1: 그럼 먼저값들 저장이 먼저 되어있어야하는데 아님, 다 줘야될듯?...)
+//        String filter = "{\"memberId\":" + memberId + "}"; //이건 고정 이어서 String 총탄수= "jsonfile형식" 가져가서 승환이기 사용가능한 파이선 변수로 변환가능
+//
+//
+//        // HTTP 요청 엔티티 생성
+//        HttpEntity<String> request = new HttpEntity<>(filter, headers);
+//
+//        // 파이썬 서버로 POST 요청 보내기
+//        ResponseEntity<String> response = restTemplate.exchange(
+//                pythonServerUrl, HttpMethod.POST, request, String.class);
+//
+//        // 응답 코드 확인 (200은 성공)
+//        HttpStatus statusCode = response.getStatusCode();
+//        if (statusCode == HttpStatus.OK) {
+//            // 응답 처리 (response.getBody()를 사 용하여 파이썬 서버의 응답 내용을 읽을 수 있음)
+//            String pythonServerResponse = response.getBody();
+//            // ...
+//        } else {
+//            // 오류 처리
+//            // ...
+//        }
+
         return "calculator";
     }
 
@@ -51,7 +91,8 @@ public class CalculatorController {
         int fatSum = 0;
 
         // api 정리
-        int carbohydrateSum=0;
+
+        int carbohydrateSum =0;
         Long member_id = 0L;
 
         for (int i=0;i<foodlist.getFoodlist().size();i++){
