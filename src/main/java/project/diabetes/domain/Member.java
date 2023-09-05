@@ -15,7 +15,6 @@ public class Member {
     @Id @GeneratedValue
     @Column(name = "member_id")
     private long id;
-    private String pw;
     private String name;
     private int age;
     private String sex;
@@ -24,4 +23,5 @@ public class Member {
     private float weight;
     private Integer goal;
     private String userId;
+    private String userPassword;
 }

@@ -7,78 +7,81 @@
     <link rel="stylesheet" href="/css/info.css">
 </head>
 <body>
-<div class="navigation">
-    <ul>
-        <li>
-            <a th:href="@{/info/{id}(id=${memberId})}">
-                <span class="icon"><ion-icon name="heart-circle-outline"></ion-icon></span>
-                <span class="title">Su.Balance</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/info/{id}(id=${memberId})}">
-                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                <span class="title">홈</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/calculator/{id}(id=${memberId})}">
-                <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
-                <span class="title">투여량 계산</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/record/{id}(id=${memberId})}">
-                <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
-                <span class="title">혈당 등록</span>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/board/{id}(id=${memberId})}">
-                <span class="icon"><ion-icon name="list-outline"></ion-icon></span>
-                <span class="title">혈당 일지</span>
-            </a>
-        </li>
-    </ul>
-</div>
-<form class="container" th:action="@{/infoFirst/{id}(id=${memberId})/save}" th:object="${member}" method="post" >
+    <div class="navigation">
+        <ul>
+            <li>
+                <a th:href="@{/info/{id}(id=${memberId})}">
+                    <span class="icon"><ion-icon name="heart-circle-outline"></ion-icon></span>
+                    <span class="title">Su.Balance</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/info/{id}(id=${memberId})}">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="title">홈</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/calculator/{id}(id=${memberId})}">
+                    <span class="icon"><ion-icon name="calculator-outline"></ion-icon></span>
+                    <span class="title">투여량 계산</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/record/{id}(id=${memberId})}">
+                    <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
+                    <span class="title">혈당 등록</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/board/{id}(id=${memberId})}">
+                    <span class="icon"><ion-icon name="list-outline"></ion-icon></span>
+                    <span class="title">혈당 일지</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form class="container" th:action="@{/infoFirst/save/{id}(id=${memberId})}" method="post">
+        <!-- main -->
+        <div class="main">
+            <!-- table -->
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>개인정보 등록</h2>
+                    </div>
+                    <div class="input-box">
+                        <label for="name">이름:</label>
+                        <input id="name" name="name" placeholder="홍길동" >
+                    </div>
 
-    <!-- main -->
-    <div class="main">
-        <!-- table -->
-        <div class="details">
-            <div class="recentOrders">
-                <div class="cardHeader">
-                    <h2><span th:text="${memberId}"></span>"님의 정보 등록</h2>
-                </div>
-                <div class="input-box">
-                    <label for="name">이름:</label>
-                    <input id="name" name="name" th:field="*{name}" >
-                </div>
-
-                <div class="input-box">
-                    <label for="age">나이:</label>
-                    <input id="age" name="age" th:field="*{age}">
-                </div>
-
-                <div class="input-box">
-                    <label for="height">키:</label>
-                    <input id="height" name="height" th:field="*{height}">
-                </div>
-                <div class="input-box">
-                    <label for="weight">몸무게:</label>
-                    <input id="weight" name="weight" th:field="*{weight}">
-                </div>
-                <div class="input-box">
-                    <label for="goal">목표 혈당:</label>
-                    <input id="goal" name="goal" th:field="*{goal}">
-                </div>
-                <div class="pagination">
-                    <button type="submit" onclick=""><a>개인정보에 추가하기</a></button>
+                    <div class="input-box">
+                        <label for="age">나이:</label>
+                        <input id="age" name="age" placeholder="25">
+                    </div>
+                    <div class="input-box">
+                        <label for="sex">성별:</label>
+                        <input id="sex" name="sex" placeholder="남자 or 여자">
+                    </div>
+                    <div class="input-box">
+                        <label for="height">키:</label>
+                        <input id="height" name="height" placeholder="175">
+                    </div>
+                    <div class="input-box">
+                        <label for="weight">몸무게:</label>
+                        <input id="weight" name="weight" placeholder="75">
+                    </div>
+                    <div class="input-box">
+                        <label for="goal">목표 혈당:</label>
+                        <input id="goal" name="goal" placeholder="120">
+                    </div>
+                    <div class="pagination">
+                        <button type="submit" onclick=""><a>개인정보에 추가하기</a></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+
 </body>
 </html>

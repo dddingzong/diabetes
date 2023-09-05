@@ -42,6 +42,7 @@ public class RecordController {
         }
     }
 
+
     @GetMapping("/board/{memberId}")
     public String board1(Model model, @PathVariable Long memberId) {
         model.addAttribute("memberId",memberId);
@@ -58,6 +59,8 @@ public class RecordController {
         model.addAttribute("numericRecordList", numericRecordList);
         return "board";
     }
+
+
     @GetMapping("/board2/{memberId}")
     public String board2(Model model, @PathVariable Long memberId) {
         model.addAttribute("memberId",memberId);

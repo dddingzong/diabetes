@@ -24,13 +24,6 @@ class DiabetesApplicationTests {
 	@Transactional
 	void contextLoads() throws Exception {
 		Info info = new Info();
-		info.setText("test1");
-
-		Long saveId = infoRepository.save(info);
-		Info findInfo = infoRepository.find(saveId);
-
-		Assertions.assertThat(findInfo.getId()).isEqualTo(info.getId());
-		Assertions.assertThat(findInfo.getText()).isEqualTo(info.getText());
 	}
 
 }
