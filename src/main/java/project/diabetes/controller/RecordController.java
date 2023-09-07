@@ -236,8 +236,38 @@ public class RecordController {
 
     @GetMapping("/graph/{memberId}") //그래프
     public String graph(Model model, @PathVariable Long memberId) {
+        System.out.println("test");
         model.addAttribute("memberId",memberId);
-        List<String> glist = recordService.findGlucoseByMemberId(memberId);
+        List<Record> recordlist = recordService.findRecordByMemberId(memberId); //Record
+        List<Integer> glucoseList = new ArrayList<>(); // Glucose
+        List<Integer> numericGlucoseList = new ArrayList<>(); // model 로 넘어가는 리스트 (glucose)
+
+        for (int i=0; i<recordlist.size();i++){
+            int glucoseForList = recordlist.get(i).getGlucose();
+            glucoseList.add(glucoseForList);
+        }
+
+        for (int i = 0; i < Math.min(84, glucoseList.size()); i++) {
+
+            int glucose = glucoseList.get(i);
+
+            try {
+                numericGlucoseList.add(glucose);
+            } catch (NumberFormatException e) {
+                numericGlucoseList.add(null);
+            }
+        }
+
+        List<String> glist = new ArrayList<>();
+        for (int i =0; i < numericGlucoseList.size();i++){
+            Integer num = numericGlucoseList.get(i);
+            String num_st = String.valueOf(num);
+            glist.add(num_st);
+        }
+
+        for (int i =0; i <glist.size(); i++){
+            System.out.println("glist = " + glist.get(i));
+        }
         model.addAttribute("glist", glist);
         return "graph";
     }

@@ -7,30 +7,6 @@
     <title>Su.Balance</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/board.css">
-    <script>
-        window.onload = function() {
-            var today = new Date(); // 현재 날짜와 시간을 가져옴
-            var year = today.getFullYear(); // 현재 연도
-            var month = today.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
-            var day = today.getDate(); // 현재 일
-
-            var formattedDate = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
-
-            // 각각의 span 요소에 가져온 날짜를 설정
-            var dateSpans = document.querySelectorAll('.date-span');
-            dateSpans.forEach(function(span) {
-                span.textContent = formattedDate;
-            });
-        };
-    </script>
-    <script>
-        function openPopup() {
-            // 팝업 창을 중앙에 위치시키고 크기를 설정
-            var popupWindow = window.open('graph', '팝업 창', 'width=1000,height=350,top=100,left=100');
-            // 팝업 창이 차단되지 않도록 포커스 설정
-            popupWindow.focus();
-        }
-    </script>
 </head>
 
 <body>
@@ -111,9 +87,9 @@
                         <span th:if="${totalList[index] != null}">
                             <span th:if="${totalList[index] == -1}" th:text="기억X"></span>
                             <span th:if="${totalList[index] != -1}">
-                                <span th:class="${index % 2 == 1 && totalList[index] >= 200 ? 'high' :
+                                <span th:class="${index % 2 == 1 && totalList[index] >= 180 ? 'high' :
                                                    index % 2 == 1 && totalList[index] <= 70 ? 'low' : ''}">
-                                    <span th:text="${index % 2 == 1 && totalList[index] >= 200 ? totalList[index] + ' 고혈당 ' :
+                                    <span th:text="${index % 2 == 1 && totalList[index] >= 180  ? totalList[index] + ' 고혈당 ' :
                                                         index % 2 == 1 && totalList[index] <= 70 ? totalList[index] + ' 저혈당 ' : totalList[index]}">
                                     </span>
                                 </span>
@@ -124,16 +100,13 @@
                 </tr>
 
             </table>
-            <div class="pagination">
-                <button onclick="openPopup()"><a>혈당그래프 확인하기</a></button>
-            </div>
         </div>
 
         <!-- 페이징 처리하는 HTML -->
         <div class="pagination">
-            <a href="http://localhost:8080/board">1</a>
-            <a href="http://localhost:8080/board2">2</a>
-            <a href="http://localhost:8080/board3">3</a>
+            <a href="/board">1</a>
+            <a href="/board2">2</a>
+            <a href="/board3">3</a>
         </div>
     </div>
 
@@ -149,27 +122,5 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://kit.fontawesome.com/5f6c1918e3.js" crossorigin="anonymous"></script>
-
-<script>
-    $('#empAdd').click(function(){
-        $('.write-popup').css('display', 'block');
-    });
-    $('.btn-cancel').click(function(){
-        $('.write-popup').css('display', 'none');
-    });
-    $('.btn-close').click(function(){
-        location.reload();//새로 고침
-    });
-    let list = document.querySelectorAll('.navigation li');
-    function activeLink(){
-        list.forEach((item) => {item.classList.remove('hovered')});
-        this.classList.add('hovered');
-    }
-    list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
-
-    function getBoard(){
-        $('.update-popup').css('display', 'block');
-    }
-</script>
 
 <script src="/js/script.js"></script>
