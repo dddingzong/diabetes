@@ -10,6 +10,7 @@
 * JAVA version 11 
 * SpringBoot version 2.7.6
 * hibernate version 5.6.14
+* Mybatis version 2.2.3
 * H2 database (in local)
 
 
