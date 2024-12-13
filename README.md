@@ -12,5 +12,6 @@
 * hibernate version 5.6.14
 * H2 database (in local)
 
+
 * mariaDB (in server)
 * AWS (in server)
