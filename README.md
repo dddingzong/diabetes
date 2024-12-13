@@ -7,9 +7,9 @@
 * 전체적인 리펙토링
 
 ### 기술 스펙 
-* JAVA version
-* SpringBoot version
-* hibernate version 
+* JAVA version 11 
+* SpringBoot version 2.7.6
+* hibernate version 5.6.14
 * H2 database (in local)
 
 * mariaDB (in server)
