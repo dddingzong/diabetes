@@ -10,7 +10,6 @@ import project.diabetes.domain.Member;
 import project.diabetes.service.InfoService;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 
 @Controller
@@ -26,8 +25,8 @@ public class InfoController {
 //        List<String> glist = (List<String>) session.getAttribute("glist"); // 세션에서 glist 가져오기
 //        model.addAttribute("glist", glist);
 
-        model.addAttribute("memberId",memberId);
-        model.addAttribute("member",member);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("member", member);
 
         if (member.getGoal() == null) {
             return "infoFirst";
@@ -37,8 +36,8 @@ public class InfoController {
     }
 
     @PostMapping("info/update/{memberId}") // 비밀번호랑 goal 변경 메소드
-    public String updateMemberInfo(Model model, @PathVariable Long memberId, String userPassword, Integer goal){
-        model.addAttribute("memberId",memberId);
+    public String updateMemberInfo(Model model, @PathVariable Long memberId, String userPassword, Integer goal) {
+        model.addAttribute("memberId", memberId);
 
         Member member = infoService.findMemberByMemberId(memberId);
         String userId = member.getUserId();
@@ -53,7 +52,7 @@ public class InfoController {
 
         infoService.flush();
 
-        model.addAttribute("member",member);
+        model.addAttribute("member", member);
         return "info";
     }
 
@@ -61,8 +60,8 @@ public class InfoController {
     @GetMapping("/infoFirst/{memberId}") //존재이유 x
     public String infoFirst(Model model, @PathVariable Long memberId) {
         Member member = infoService.findMemberByMemberId(memberId);
-        model.addAttribute("memberId",memberId);
-        model.addAttribute("member",member);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("member", member);
         return "info";
     }
 
@@ -76,7 +75,7 @@ public class InfoController {
                                  float weight,
                                  Integer goal) {
         Member member = infoService.findMemberByMemberId(memberId);
-        model.addAttribute("memberId",memberId);
+        model.addAttribute("memberId", memberId);
 
         member.setName(name);
         member.setAge(age);
@@ -85,7 +84,7 @@ public class InfoController {
         member.setWeight(weight);
         member.setGoal(goal);
 
-        model.addAttribute("member",member);
+        model.addAttribute("member", member);
 
         infoService.flush();
 
