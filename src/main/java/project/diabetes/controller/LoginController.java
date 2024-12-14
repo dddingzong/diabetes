@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/")
-    public String signUp(Model model, String userId, String userEmail, String userPassword, String userPassword2) {
+    public String signUp(Model model, String userId, String userEmail, String userPassword, String checkPassword) {
 
         // 아이디가 중복된 경우 (true 면 중복)
         if (loginService.checkDuplicateId(userId)) {
@@ -30,7 +30,7 @@ public class LoginController {
         }
 
         //비밀번호와 비밀번호 확인이 다른경우
-        if (!(userPassword.equals(userPassword2))) {
+        if (!(userPassword.equals(checkPassword))) {
             model.addAttribute("warning", "비밀번호와 비밀번호 재입력이 다릅니다.");
             return "logIn";
         }
